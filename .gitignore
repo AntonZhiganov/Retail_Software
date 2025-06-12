@@ -1,0 +1,25 @@
+# Qt Creator user-specific files
+*.pro.user
+*.pro.user.*
+*.autosave
+
+# Build directories
+build*/
+debug/
+release/
+
+# Compiled object files and binaries
+*.o
+*.obj
+*.exe
+*.dll
+
+*.so
+*.a
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
