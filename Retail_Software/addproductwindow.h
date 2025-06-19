@@ -2,6 +2,7 @@
 #define ADDPRODUCTWINDOW_H
 
 #include <QWidget>
+#include <QVBoxLayout>
 
 namespace Ui {
 class AddProductWindow;
@@ -17,6 +18,12 @@ public:
 
 private:
     Ui::AddProductWindow *ui;
+
+private:
+    QVBoxLayout* layout;
+
+private slots:
+    void onNewProductTypeButtonClicked();
 };
 
 #endif // ADDPRODUCTWINDOW_H
