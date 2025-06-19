@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>691</width>
-    <height>541</height>
+    <width>749</width>
+    <height>662</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,7 +40,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Purchase</string>
+           <string>Add product</string>
           </property>
          </widget>
         </item>
@@ -107,6 +107,18 @@
           </property>
           <property name="text">
            <string>Information about clients</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="ordersButton">
+          <property name="font">
+           <font>
+            <pointsize>25</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Orders</string>
           </property>
          </widget>
         </item>

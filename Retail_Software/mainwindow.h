@@ -34,6 +34,8 @@ private slots:
     void on_incomeAndExpensesButton_clicked();
 private slots:
     void on_clientsButton_clicked();
+private slots:
+    void on_ordersButton_clicked();
 };
 
 

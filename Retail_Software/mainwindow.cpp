@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include "warehosewindow.h"
+#include "addproductwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,10 +15,12 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+ // buttons
 void MainWindow::on_purchaseButton_clicked()
 {
-    QMessageBox::information(this, "Purchase", "'Purchase' pressed");
+    AddProductWindow *addproductwindow = new AddProductWindow();
+    addproductwindow->show();
+    this -> hide();
 }
 
 void MainWindow::on_additionalExpensesButton_clicked()
@@ -35,7 +38,7 @@ void MainWindow::on_checkButton_clicked()
 
     WarehoseWindow *warehosewindow = new WarehoseWindow();
     warehosewindow->show();
-    this -> hide();
+    this -> hide();                                                                              //Hides the main window
 
 }
 
@@ -47,4 +50,9 @@ void MainWindow::on_incomeAndExpensesButton_clicked()
 void MainWindow::on_clientsButton_clicked()
 {
     QMessageBox::information(this, "Information about clients", "'Information about clients' pressed");
+}
+
+void MainWindow::on_ordersButton_clicked()
+{
+    QMessageBox::information(this, "Orders", "'Orders' pressed");
 }
