@@ -2,6 +2,7 @@
 #define WAREHOSEWINDOW_H
 
 #include <QWidget>
+#include <QtSql/QSqlDatabase>
 
 namespace Ui {
 class WarehoseWindow;
@@ -17,6 +18,9 @@ public:
 
 private:
     Ui::WarehoseWindow *ui;
+    QSqlDatabase db;
+
+    void openDB();
 };
 
 #endif // WAREHOSEWINDOW_H

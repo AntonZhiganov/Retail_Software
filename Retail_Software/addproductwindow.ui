@@ -61,6 +61,21 @@
               </spacer>
              </item>
              <item>
+              <widget class="QLabel" name="OrderDatelabel">
+               <property name="font">
+                <font>
+                 <pointsize>25</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Order date</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDateEdit" name="orderDateEdit"/>
+             </item>
+             <item>
               <widget class="QPushButton" name="confirmOrderButton">
                <property name="font">
                 <font>
