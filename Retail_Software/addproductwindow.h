@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QPushButton>
 
 namespace Ui {
 class AddProductWindow;
@@ -18,6 +19,7 @@ public:
 
 private:
     Ui::AddProductWindow *ui;
+    QVBoxLayout* scrollLayout;
 
 private:
     QVBoxLayout* layout;

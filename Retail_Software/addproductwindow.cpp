@@ -10,6 +10,10 @@ AddProductWindow::AddProductWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    scrollLayout = new QVBoxLayout;
+    ui->productsWidget->setLayout(scrollLayout);
+
+
     connect(ui->newProductTypeButton, &QPushButton::clicked, this, &AddProductWindow::onNewProductTypeButtonClicked);
 
 }
@@ -23,10 +27,13 @@ void AddProductWindow::onNewProductTypeButtonClicked()
 {
     QLabel* nameName = new QLabel("Product name", this);
     QLineEdit* nameLineEdit = new QLineEdit(this);
+
     QLabel* priceName = new QLabel("Product price(for everyone)", this);
     QLineEdit* priceLineEdit = new QLineEdit(this);
+
     QLabel* quantityName = new QLabel("Product quantity", this);
     QSpinBox* quantitySpinBox = new QSpinBox(this);
+
     quantitySpinBox->setMinimum(0);
     quantitySpinBox->setMaximum(100);
 
