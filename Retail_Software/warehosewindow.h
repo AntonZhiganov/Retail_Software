@@ -21,6 +21,7 @@ private:
     QSqlDatabase db;
 
     void openDB();
+    void loadProducts();
 };
 
 #endif // WAREHOSEWINDOW_H

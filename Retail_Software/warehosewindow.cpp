@@ -11,6 +11,7 @@ WarehoseWindow::WarehoseWindow(QWidget *parent)
     ui->setupUi(this);
 
     openDB();
+    loadProducts();
 }
 
 WarehoseWindow::~WarehoseWindow()
@@ -23,8 +24,11 @@ WarehoseWindow::~WarehoseWindow()
 
 void WarehoseWindow::openDB()
 {
-    db = QSqlDatabase::addDatabase("QSQLITE", "WarehoseConnection");
-    db.setDatabaseName("warehose.db");
+    db = QSqlDatabase::database("WarehoseConnection");
+    if (!db.isValid()) {
+        qDebug() << "Database connection not found!";
+        return;
+    }
 
     if (!db.open()) {
         qDebug() << "Could not open the database:" << db.lastError().text();
@@ -48,5 +52,28 @@ void WarehoseWindow::openDB()
         qDebug() << "Error creating table:" << query.lastError().text();
     } else {
         qDebug() << "Table created or already exists";
+    }
+}
+
+void WarehoseWindow::loadProducts()
+{
+    QSqlQuery query(db);
+    if (!query.exec("SELECT id, name, quantity, purchase, sale, date FROM products")) {
+        qDebug() << "Failed to fetch products:" << query.lastError().text();
+        return;
+    }
+
+    ui->productTableWidget->clear();
+    ui->productTableWidget->setColumnCount(6);
+    ui->productTableWidget->setHorizontalHeaderLabels({"ID", "Name", "Quantity", "Purchase", "Sale", "Date"});
+    ui->productTableWidget->setRowCount(0);
+
+    int row = 0;
+    while (query.next()) {
+        ui->productTableWidget->insertRow(row);
+        for (int col = 0; col < 6; ++col) {
+            ui->productTableWidget->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
+        }
+        ++row;
     }
 }
