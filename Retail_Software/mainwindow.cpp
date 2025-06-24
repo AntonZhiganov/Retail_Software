@@ -38,7 +38,7 @@ void MainWindow::on_checkButton_clicked()
 
     WarehoseWindow *warehosewindow = new WarehoseWindow();
     warehosewindow->show();
-    this -> hide();                                                                              //Hides the main window
+    this -> hide();
 
 }
 

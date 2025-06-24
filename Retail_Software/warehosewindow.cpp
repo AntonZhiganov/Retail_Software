@@ -10,6 +10,13 @@ WarehoseWindow::WarehoseWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QFont font = ui->productTableWidget->font();
+    font.setPointSize(10);
+    ui->productTableWidget->setFont(font);
+
+    ui->productTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->productTableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
     openDB();
     loadProducts();
 }
