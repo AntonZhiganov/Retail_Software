@@ -13,6 +13,7 @@ AddProductWindow::AddProductWindow(QWidget *parent)
     , ui(new Ui::AddProductWindow)
 {
     ui->setupUi(this);
+    ui->orderDateEdit->setDate(QDate::currentDate());
 
     scrollLayout = new QVBoxLayout;
     ui->productsWidget->setLayout(scrollLayout);
@@ -20,7 +21,7 @@ AddProductWindow::AddProductWindow(QWidget *parent)
 
     connect(ui->newProductTypeButton, &QPushButton::clicked, this, &AddProductWindow::onNewProductTypeButtonClicked);
 
-     connect(ui->confirmOrderButton, &QPushButton::clicked, this, &AddProductWindow::onConfirmOrderButtonClicked);
+    connect(ui->confirmOrderButton, &QPushButton::clicked, this, &AddProductWindow::onConfirmOrderButtonClicked);
 }
 
 AddProductWindow::~AddProductWindow()
@@ -61,14 +62,14 @@ void AddProductWindow::onConfirmOrderButtonClicked()
     if (!db.isOpen()) {
         qDebug() << "Database is not open!";
         return;
-}
+    }
 
     QSqlQuery query(db);
 
     for (int pos = 0; pos < nameEdits.size(); ++pos) {
         QString name = nameEdits[pos]->text();
         bool priceOk;
-        int purchase = priceEdits[pos]->text().toInt(&priceOk);
+        int price = priceEdits[pos]->text().toInt(&priceOk);
         if (!priceOk) {
             qDebug() << "Invalid price input at index" << pos;
             continue;
@@ -76,12 +77,12 @@ void AddProductWindow::onConfirmOrderButtonClicked()
 
         int quantity = quantitySpinBoxes[pos]->value();
 
-        QString date = QDate::currentDate().toString("yyyy-MM-dd");
+        QString date = ui->orderDateEdit->date().toString("yyyy-MM-dd");
 
-        query.prepare("INSERT INTO products (name, quantity, purchase, sale, date) VALUES (?, ?, ?, 0, ?)");
+        query.prepare("INSERT INTO products (name, quantity, price, date) VALUES (?, ?, ?, ?)");
         query.addBindValue(name);
         query.addBindValue(quantity);
-        query.addBindValue(purchase);
+        query.addBindValue(price);
         query.addBindValue(date);
 
         if (!query.exec()) {
