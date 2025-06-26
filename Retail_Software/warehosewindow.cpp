@@ -50,7 +50,7 @@ void WarehoseWindow::openDB()
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             quantity INTEGER,
-            price INTEGER,
+            price FLOAT,
             date TEXT
         )
     )";

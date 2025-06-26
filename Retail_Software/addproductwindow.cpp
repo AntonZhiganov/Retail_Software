@@ -69,7 +69,7 @@ void AddProductWindow::onConfirmOrderButtonClicked()
     for (int pos = 0; pos < nameEdits.size(); ++pos) {
         QString name = nameEdits[pos]->text();
         bool priceOk;
-        int price = priceEdits[pos]->text().toInt(&priceOk);
+        double price = priceEdits[pos]->text().toDouble(&priceOk);
         if (!priceOk) {
             qDebug() << "Invalid price input at index" << pos;
             continue;
