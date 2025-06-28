@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include "warehosewindow.h"
 #include "addproductwindow.h"
+#include "incomeandexpenseswindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,7 +16,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
- // buttons
+
 void MainWindow::on_purchaseButton_clicked()
 {
     AddProductWindow *addproductwindow = new AddProductWindow();
@@ -44,7 +45,9 @@ void MainWindow::on_checkButton_clicked()
 
 void MainWindow::on_incomeAndExpensesButton_clicked()
 {
-    QMessageBox::information(this, "Income and expenses", "'Information about income and expenses' pressed");
+    IncomeAndExpensesWindow *incomeandexpenseswindow = new IncomeAndExpensesWindow();
+    incomeandexpenseswindow ->show();
+    this -> hide();
 }
 
 void MainWindow::on_clientsButton_clicked()

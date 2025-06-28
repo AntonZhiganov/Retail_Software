@@ -10,17 +10,23 @@ CONFIG += c++17
 
 SOURCES += \
     addproductwindow.cpp \
+    incomeandexpenseswindow.cpp \
+    incomeandexpenseswindow.cpp \
     main.cpp \
     mainwindow.cpp \
     warehosewindow.cpp
 
 HEADERS += \
     addproductwindow.h \
+    incomeandexpenseswindow.h \
+    incomeandexpenseswindow.h \
     mainwindow.h \
     warehosewindow.h
 
 FORMS += \
     addproductwindow.ui \
+    incomeandexpenseswindow.ui \
+    incomeandexpenseswindow.ui \
     mainwindow.ui \
     warehosewindow.ui
 
