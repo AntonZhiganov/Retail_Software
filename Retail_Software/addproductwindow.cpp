@@ -42,7 +42,7 @@ void AddProductWindow::onNewProductTypeButtonClicked()
     QLabel* quantityName = new QLabel(QString("Product quantity %1").arg(index), this);
     QSpinBox* quantitySpinBox = new QSpinBox(this);
     quantitySpinBox->setMinimum(0);
-    quantitySpinBox->setMaximum(100);
+    quantitySpinBox->setMaximum(1000);
 
     ui->verticalLayout->insertWidget(0, quantitySpinBox);
     ui->verticalLayout->insertWidget(0, quantityName);

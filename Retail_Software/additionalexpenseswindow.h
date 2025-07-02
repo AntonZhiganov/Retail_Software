@@ -17,6 +17,10 @@ public:
 
 private:
     Ui::AdditionalExpensesWindow *ui;
+
+private slots:
+    void on_defectiveProductButton_clicked();
+    void on_advertisingButton_clicked();
 };
 
 #endif // ADDITIONALEXPENSESWINDOW_H
