@@ -64,10 +64,8 @@ void AddProductWindow::onConfirmOrderButtonClicked()
         return;
     }
 
-    QSqlQuery query(db);
-
     for (int pos = 0; pos < nameEdits.size(); ++pos) {
-        QString name = nameEdits[pos]->text();
+        QString name = nameEdits[pos]->text().trimmed();;
         bool priceOk;
         double price = priceEdits[pos]->text().toDouble(&priceOk);
         if (!priceOk) {
@@ -76,21 +74,42 @@ void AddProductWindow::onConfirmOrderButtonClicked()
         }
 
         int quantity = quantitySpinBoxes[pos]->value();
-
         QString date = ui->orderDateEdit->date().toString("yyyy-MM-dd");
 
-        query.prepare("INSERT INTO products (name, quantity, price, date) VALUES (?, ?, ?, ?)");
-        query.addBindValue(name);
-        query.addBindValue(quantity);
-        query.addBindValue(price);
-        query.addBindValue(date);
+        QSqlQuery checkQuery(db);
+        checkQuery.prepare("SELECT quantity FROM products WHERE name = ?");
+        checkQuery.addBindValue(name);
 
-        if (!query.exec()) {
-            qDebug() << "Failed to insert product:" << query.lastError().text();
+        if (checkQuery.exec() && checkQuery.next()) {
+            int existingQuantity = checkQuery.value(0).toInt();
+            int newQuantity = existingQuantity + quantity;
+
+        QSqlQuery updateQuery(db);
+        updateQuery.prepare("UPDATE products SET quantity = ?, price = ?, date = ? WHERE name = ?");
+        updateQuery.addBindValue(newQuantity);
+        updateQuery.addBindValue(price);
+        updateQuery.addBindValue(date);
+        updateQuery.addBindValue(name);
+
+        if (!updateQuery.exec()) {
+            qDebug() << "Failed to update product:" << updateQuery.lastError().text();
         } else {
-            qDebug() << "Product inserted successfully:" << name;
+            qDebug() << "Product updated successfully:" << name;
         }
 
-    }
+    } else {
+        QSqlQuery insertQuery(db);
+        insertQuery.prepare("INSERT INTO products (name, quantity, price, date) VALUES (?, ?, ?, ?)");
+        insertQuery.addBindValue(name);
+        insertQuery.addBindValue(quantity);
+        insertQuery.addBindValue(price);
+        insertQuery.addBindValue(date);
 
+        if (!insertQuery.exec()) {
+            qDebug() << "Failed to insert product:" << insertQuery.lastError().text();
+        } else {
+             qDebug() << "Product inserted successfully:" << name;
+            }
+        }
+    }
 }
