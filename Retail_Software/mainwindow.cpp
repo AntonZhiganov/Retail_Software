@@ -4,6 +4,7 @@
 #include "warehosewindow.h"
 #include "addproductwindow.h"
 #include "incomeandexpenseswindow.h"
+#include "additionalexpenseswindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -26,7 +27,9 @@ void MainWindow::on_purchaseButton_clicked()
 
 void MainWindow::on_additionalExpensesButton_clicked()
 {
-    QMessageBox::information(this, "Additional expenses", "'Additional expenses' pressed");
+    AdditionalExpensesWindow * additionalexpenseswindow = new AdditionalExpensesWindow();
+    additionalexpenseswindow->show();
+    this -> hide();
 }
 
 void MainWindow::on_saleButton_clicked()

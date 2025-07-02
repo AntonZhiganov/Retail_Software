@@ -9,6 +9,7 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    additionalexpenseswindow.cpp \
     addproductwindow.cpp \
     incomeandexpenseswindow.cpp \
     main.cpp \
@@ -16,12 +17,14 @@ SOURCES += \
     warehosewindow.cpp
 
 HEADERS += \
+    additionalexpenseswindow.h \
     addproductwindow.h \
     incomeandexpenseswindow.h \
     mainwindow.h \
     warehosewindow.h
 
 FORMS += \
+    additionalexpenseswindow.ui \
     addproductwindow.ui \
     incomeandexpenseswindow.ui \
     mainwindow.ui \
