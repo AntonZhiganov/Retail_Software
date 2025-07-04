@@ -19,9 +19,8 @@ private:
     Ui::AdditionalExpensesWindow *ui;
 
 private slots:
-    void on_defectiveProductButton_clicked();
-    void on_advertisingButton_clicked();
-    void on_ConfirmPushButton_clicked();
+    void on_defectiveProductPushButton_clicked();
+    void on_advertisingPushButton_clicked();
 };
 
 #endif // ADDITIONALEXPENSESWINDOW_H

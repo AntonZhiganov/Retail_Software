@@ -107,7 +107,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="pricePineEdit">
+          <widget class="QLineEdit" name="priceLineEdit">
            <property name="font">
             <font>
              <pointsize>20</pointsize>
@@ -158,6 +158,19 @@
         </spacer>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="confirmAdvertisingPushButton">
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>confirm</string>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer">
@@ -214,7 +227,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <spacer name="horizontalSpacer_4">
+        <spacer name="horizontalSpacer_3">
          <property name="orientation">
           <enum>Qt::Orientation::Horizontal</enum>
          </property>
@@ -227,20 +240,19 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="confirmPushButton">
+        <widget class="QPushButton" name="viewDataPushButton">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
-           <bold>true</bold>
           </font>
          </property>
          <property name="text">
-          <string>confirm</string>
+          <string>view data on past ads</string>
          </property>
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_3">
+        <spacer name="horizontalSpacer_4">
          <property name="orientation">
           <enum>Qt::Orientation::Horizontal</enum>
          </property>

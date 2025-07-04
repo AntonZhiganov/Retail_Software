@@ -18,18 +18,14 @@ AdditionalExpensesWindow::~AdditionalExpensesWindow()
     delete ui;
 }
 
-void AdditionalExpensesWindow::on_defectiveProductButton_clicked()
+void AdditionalExpensesWindow::on_defectiveProductPushButton_clicked()
 {
     QMessageBox::information(this, "Defective Product", "'Defective Product' pressed");
 }
 
-void AdditionalExpensesWindow::on_advertisingButton_clicked()
+void AdditionalExpensesWindow::on_advertisingPushButton_clicked()
 {
    AdvertisingWindow * advertisingwindow = new AdvertisingWindow();
     advertisingwindow->show();
     this -> hide();
-}
-
-void AdditionalExpensesWindow::on_ConfirmPushButton_clicked() {
-
 }

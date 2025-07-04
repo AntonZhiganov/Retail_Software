@@ -20,6 +20,11 @@ private:
     Ui::AdvertisingWindow *ui;
 
     void openDB();
+
+private slots:
+    void on_viewDataPushButton_clicked();
+    void on_confirmAdvertisingPushButton_clicked();
+
 };
 
 #endif // ADVERTISINGWINDOW_H

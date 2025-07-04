@@ -52,14 +52,14 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QPushButton" name="defectiveProductButton">
+          <widget class="QPushButton" name="defectiveProductPushButton">
            <property name="text">
             <string>defective product</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="advertisingButton">
+          <widget class="QPushButton" name="advertisingPushButton">
            <property name="text">
             <string>advertising</string>
            </property>

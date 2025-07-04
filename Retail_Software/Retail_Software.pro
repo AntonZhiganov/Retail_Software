@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     additionalexpenseswindow.cpp \
     addproductwindow.cpp \
+    advertisinginformationwindow.cpp \
     advertisingwindow.cpp \
     incomeandexpenseswindow.cpp \
     main.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 HEADERS += \
     additionalexpenseswindow.h \
     addproductwindow.h \
+    advertisinginformationwindow.h \
     advertisingwindow.h \
     incomeandexpenseswindow.h \
     mainwindow.h \
@@ -28,6 +30,7 @@ HEADERS += \
 FORMS += \
     additionalexpenseswindow.ui \
     addproductwindow.ui \
+    advertisinginformationwindow.ui \
     advertisingwindow.ui \
     incomeandexpenseswindow.ui \
     mainwindow.ui \
