@@ -45,20 +45,20 @@ void WarehoseWindow::openDB()
 
     QSqlQuery query(db);
     //query.exec("DROP TABLE IF EXISTS products");
-    QString createTableQuery = R"(
+    QString createProductsTableQuery = R"(
         CREATE TABLE IF NOT EXISTS products (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            quantity INTEGER,
-            price FLOAT,
+            name TEXT ,
+            quantity INTEGER ,
+            price FLOAT ,
             date TEXT
         )
     )";
 
-    if (!query.exec(createTableQuery)) {
+    if (!query.exec(createProductsTableQuery)) {
         qDebug() << "Error creating table:" << query.lastError().text();
     } else {
-        qDebug() << "Table created or already exists";
+        qDebug() << "Products table created or already exists";
     }
 }
 

@@ -29,3 +29,7 @@ void AdditionalExpensesWindow::on_advertisingButton_clicked()
     advertisingwindow->show();
     this -> hide();
 }
+
+void AdditionalExpensesWindow::on_ConfirmPushButton_clicked() {
+
+}

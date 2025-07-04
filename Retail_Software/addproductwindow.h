@@ -31,8 +31,8 @@ private:
     QVBoxLayout* layout;
 
 private slots:
-    void onNewProductTypeButtonClicked();
-    void onConfirmOrderButtonClicked();
+    void on_newProductTypeButton_clicked();
+    void on_confirmOrderButton_clicked();
 };
 
 #endif // ADDPRODUCTWINDOW_H

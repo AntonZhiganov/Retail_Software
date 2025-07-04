@@ -12,3 +12,4 @@ IncomeAndExpensesWindow::~IncomeAndExpensesWindow()
 {
     delete ui;
 }
+

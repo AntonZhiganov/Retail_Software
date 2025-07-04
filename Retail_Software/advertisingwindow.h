@@ -2,6 +2,7 @@
 #define ADVERTISINGWINDOW_H
 
 #include <QWidget>
+#include <QtSql/QSqlDatabase>
 
 namespace Ui {
 class AdvertisingWindow;
@@ -17,6 +18,8 @@ public:
 
 private:
     Ui::AdvertisingWindow *ui;
+
+    void openDB();
 };
 
 #endif // ADVERTISINGWINDOW_H

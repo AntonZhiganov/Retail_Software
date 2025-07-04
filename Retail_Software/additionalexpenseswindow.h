@@ -21,6 +21,7 @@ private:
 private slots:
     void on_defectiveProductButton_clicked();
     void on_advertisingButton_clicked();
+    void on_ConfirmPushButton_clicked();
 };
 
 #endif // ADDITIONALEXPENSESWINDOW_H

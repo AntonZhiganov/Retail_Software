@@ -17,11 +17,6 @@ AddProductWindow::AddProductWindow(QWidget *parent)
 
     scrollLayout = new QVBoxLayout;
     ui->productsWidget->setLayout(scrollLayout);
-
-
-    connect(ui->newProductTypeButton, &QPushButton::clicked, this, &AddProductWindow::onNewProductTypeButtonClicked);
-
-    connect(ui->confirmOrderButton, &QPushButton::clicked, this, &AddProductWindow::onConfirmOrderButtonClicked);
 }
 
 AddProductWindow::~AddProductWindow()
@@ -29,7 +24,7 @@ AddProductWindow::~AddProductWindow()
     delete ui;
 }
 
-void AddProductWindow::onNewProductTypeButtonClicked()
+void AddProductWindow::on_newProductTypeButton_clicked()
 {
     int index = nameEdits.size() + 1;
 
@@ -56,7 +51,7 @@ void AddProductWindow::onNewProductTypeButtonClicked()
     quantitySpinBoxes.append(quantitySpinBox);
 }
 
-void AddProductWindow::onConfirmOrderButtonClicked()
+void AddProductWindow::on_confirmOrderButton_clicked()
 {
     QSqlDatabase db = QSqlDatabase::database("WarehoseConnection");
     if (!db.isOpen()) {
