@@ -1,5 +1,6 @@
 #include "addproductwindow.h"
 #include "ui_addproductwindow.h"
+#include "mainwindow.h"
 #include <QLineEdit>
 #include <QLabel>
 #include <QSpinBox>
@@ -24,7 +25,7 @@ AddProductWindow::~AddProductWindow()
     delete ui;
 }
 
-void AddProductWindow::on_newProductTypeButton_clicked()
+void AddProductWindow::on_newProductTypePushButton_clicked()
 {
     int index = nameEdits.size() + 1;
 
@@ -51,7 +52,7 @@ void AddProductWindow::on_newProductTypeButton_clicked()
     quantitySpinBoxes.append(quantitySpinBox);
 }
 
-void AddProductWindow::on_confirmOrderButton_clicked()
+void AddProductWindow::on_confirmOrderPushButton_clicked()
 {
     QSqlDatabase db = QSqlDatabase::database("WarehoseConnection");
     if (!db.isOpen()) {
@@ -107,4 +108,11 @@ void AddProductWindow::on_confirmOrderButton_clicked()
             }
         }
     }
+}
+
+void AddProductWindow::on_menuPushButton_clicked()
+{
+    MainWindow *mainwindow = new MainWindow();
+    mainwindow  ->show();
+    this -> hide();
 }

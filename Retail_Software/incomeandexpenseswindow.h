@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::IncomeAndExpensesWindow *ui;
+
+private slots:
+    void on_menuPushButton_clicked();
 };
 
 #endif // INCOMEANDEXPENSESWINDOW_H

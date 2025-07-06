@@ -1,6 +1,7 @@
 #include "additionalexpenseswindow.h"
 #include "ui_additionalexpenseswindow.h"
 #include "advertisingwindow.h"
+#include "mainwindow.h"
 #include <QMessageBox>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
@@ -27,5 +28,12 @@ void AdditionalExpensesWindow::on_advertisingPushButton_clicked()
 {
    AdvertisingWindow * advertisingwindow = new AdvertisingWindow();
     advertisingwindow->show();
+    this -> hide();
+}
+
+void AdditionalExpensesWindow::on_menuPushButton_clicked()
+{
+    MainWindow *mainwindow = new MainWindow();
+    mainwindow  ->show();
     this -> hide();
 }

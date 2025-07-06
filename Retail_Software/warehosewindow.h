@@ -22,6 +22,9 @@ private:
 
     void openDB();
     void loadProducts();
+
+private slots:
+    void on_menuPushButton_clicked();
 };
 
 #endif // WAREHOSEWINDOW_H

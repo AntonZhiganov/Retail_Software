@@ -1,5 +1,6 @@
 #include "warehosewindow.h"
 #include "ui_warehosewindow.h"
+#include "mainwindow.h"
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QDebug>
@@ -83,4 +84,11 @@ void WarehoseWindow::loadProducts()
         }
         ++row;
     }
+}
+
+void WarehoseWindow::on_menuPushButton_clicked()
+{
+    MainWindow *mainwindow = new MainWindow();
+    mainwindow  ->show();
+    this -> hide();
 }
