@@ -49,7 +49,7 @@
       <widget class="QTableWidget" name="IncomeAndExpensesTableWidget">
        <property name="font">
         <font>
-         <pointsize>20</pointsize>
+         <pointsize>11</pointsize>
         </font>
        </property>
       </widget>

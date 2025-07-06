@@ -20,6 +20,7 @@ private:
 
 private slots:
     void loadData();
+    void on_menuPushButton_clicked();
 };
 
 #endif // ADVERTISINGINFORMATIONWINDOW_H

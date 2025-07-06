@@ -11,6 +11,8 @@ IncomeAndExpensesWindow::IncomeAndExpensesWindow(QWidget *parent)
     , ui(new Ui::IncomeAndExpensesWindow)
 {
     ui->setupUi(this);
+    ui->IncomeAndExpensesTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->IncomeAndExpensesTableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     QSqlDatabase db = QSqlDatabase::database("WarehoseConnection");
     if (!db.isOpen()) {

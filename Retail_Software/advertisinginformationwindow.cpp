@@ -1,5 +1,6 @@
 #include "advertisinginformationwindow.h"
 #include "ui_advertisinginformationwindow.h"
+#include "mainwindow.h"
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QDebug>
@@ -10,6 +11,9 @@ AdvertisingInformationWindow::AdvertisingInformationWindow(QWidget *parent)
     , ui(new Ui::AdvertisingInformationWindow)
 {
     ui->setupUi(this);
+
+    ui->advertisingTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->advertisingTableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     QSqlDatabase db = QSqlDatabase::database("WarehoseConnection");
     if (!db.isOpen()) {
@@ -73,4 +77,12 @@ void AdvertisingInformationWindow::loadData()
         ui->advertisingTableWidget->setItem(row, 4, new QTableWidgetItem(query.value("date").toString()));
         ++row;
     }
+}
+
+void AdvertisingInformationWindow::on_menuPushButton_clicked()
+{
+    MainWindow *mainwindow = new MainWindow();
+    mainwindow  ->show();
+    this -> hide();
+
 }
