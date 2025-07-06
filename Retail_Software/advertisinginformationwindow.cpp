@@ -19,7 +19,7 @@ AdvertisingInformationWindow::AdvertisingInformationWindow(QWidget *parent)
 
     QSqlQuery query(db);
     //query.exec("DROP TABLE IF EXISTS advertising");
-    QString createExpensesTableQuery = R"(
+    QString createAdvertisingTableQuery = R"(
         CREATE TABLE IF NOT EXISTS advertising (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             seller TEXT,
@@ -30,7 +30,7 @@ AdvertisingInformationWindow::AdvertisingInformationWindow(QWidget *parent)
         )
     )";
 
-    if (!query.exec(createExpensesTableQuery)) {
+    if (!query.exec(createAdvertisingTableQuery)) {
         qDebug() << "Error creating advertising table:" << query.lastError().text();
     } else {
         qDebug() << "Advertising table created or already exists";

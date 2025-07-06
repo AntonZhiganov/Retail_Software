@@ -17,7 +17,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
@@ -33,6 +33,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="menuPushButton">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>main menu</string>
          </property>
@@ -41,262 +46,13 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="totalSpentLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>total spent :</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="infoTotalSpentLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="spendValuta">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>€</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="totalEarnedLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>total earned :</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="infoTotalEarnedLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="earnedValuta">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>€</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="advertisingLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>spent on advertising :</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="infoAdvertisingEarnedLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="advertisingValuta">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>€</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="goodsLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>spent on goods :</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="infoGoodsLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="goodsValuta">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>€</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="QLabel" name="shippingLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>spent on shipping :</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="infoShippingLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="shippingValuta">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>€</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <item>
-        <widget class="QLabel" name="totalLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Total :</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="infoTotalLabel">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="totalValuta">
-         <property name="font">
-          <font>
-           <pointsize>20</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>€</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QTableWidget" name="IncomeAndExpensesTableWidget">
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

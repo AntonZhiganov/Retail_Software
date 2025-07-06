@@ -1,6 +1,7 @@
 #include "advertisingwindow.h"
 #include "ui_advertisingwindow.h"
 #include "advertisinginformationwindow.h"
+#include "mainwindow.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
@@ -57,5 +58,13 @@ void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked(){
         qDebug() << "Advertising record added!";
     }
 
+
+}
+
+void AdvertisingWindow::on_menuPushButton_clicked()
+{
+    MainWindow *mainwindow = new MainWindow();
+    mainwindow  ->show();
+    this -> hide();
 
 }

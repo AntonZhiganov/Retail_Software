@@ -24,6 +24,7 @@ private:
 private slots:
     void on_viewDataPushButton_clicked();
     void on_confirmAdvertisingPushButton_clicked();
+    void on_menuPushButton_clicked();
 
 };
 
