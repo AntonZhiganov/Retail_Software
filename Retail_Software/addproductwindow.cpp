@@ -60,8 +60,12 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
         return;
     }
 
+    double totalGoodsSpent = 0;
+    QString commentString;
+    QString date = ui->orderDateEdit->date().toString("yyyy-MM-dd");
+
     for (int pos = 0; pos < nameEdits.size(); ++pos) {
-        QString name = nameEdits[pos]->text().trimmed();;
+        QString name = nameEdits[pos]->text().trimmed();
         bool priceOk;
         double price = priceEdits[pos]->text().toDouble(&priceOk);
         if (!priceOk) {
@@ -70,7 +74,12 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
         }
 
         int quantity = quantitySpinBoxes[pos]->value();
-        QString date = ui->orderDateEdit->date().toString("yyyy-MM-dd");
+        if (quantity == 0) {
+            continue;
+        }
+
+        totalGoodsSpent += price * quantity;
+        commentString += name + " x" + QString::number(quantity) + ", ";
 
         QSqlQuery checkQuery(db);
         checkQuery.prepare("SELECT quantity FROM products WHERE name = ?");
@@ -80,35 +89,76 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
             int existingQuantity = checkQuery.value(0).toInt();
             int newQuantity = existingQuantity + quantity;
 
-        QSqlQuery updateQuery(db);
-        updateQuery.prepare("UPDATE products SET quantity = ?, price = ?, date = ? WHERE name = ?");
-        updateQuery.addBindValue(newQuantity);
-        updateQuery.addBindValue(price);
-        updateQuery.addBindValue(date);
-        updateQuery.addBindValue(name);
+            QSqlQuery updateQuery(db);
+            updateQuery.prepare("UPDATE products SET quantity = ?, price = ?, date = ? WHERE name = ?");
+            updateQuery.addBindValue(newQuantity);
+            updateQuery.addBindValue(price);
+            updateQuery.addBindValue(date);
+            updateQuery.addBindValue(name);
 
-        if (!updateQuery.exec()) {
-            qDebug() << "Failed to update product:" << updateQuery.lastError().text();
+            if (!updateQuery.exec()) {
+                qDebug() << "Failed to update product:" << updateQuery.lastError().text();
+            } else {
+                qDebug() << "Product updated successfully:" << name;
+            }
         } else {
-            qDebug() << "Product updated successfully:" << name;
-        }
+            QSqlQuery insertQuery(db);
+            insertQuery.prepare("INSERT INTO products (name, quantity, price, date) VALUES (?, ?, ?, ?)");
+            insertQuery.addBindValue(name);
+            insertQuery.addBindValue(quantity);
+            insertQuery.addBindValue(price);
+            insertQuery.addBindValue(date);
 
-    } else {
-        QSqlQuery insertQuery(db);
-        insertQuery.prepare("INSERT INTO products (name, quantity, price, date) VALUES (?, ?, ?, ?)");
-        insertQuery.addBindValue(name);
-        insertQuery.addBindValue(quantity);
-        insertQuery.addBindValue(price);
-        insertQuery.addBindValue(date);
-
-        if (!insertQuery.exec()) {
-            qDebug() << "Failed to insert product:" << insertQuery.lastError().text();
-        } else {
-             qDebug() << "Product inserted successfully:" << name;
+            if (!insertQuery.exec()) {
+                qDebug() << "Failed to insert product:" << insertQuery.lastError().text();
+            } else {
+                qDebug() << "Product inserted successfully:" << name;
             }
         }
     }
+
+    if (totalGoodsSpent > 0) {
+        double spentOnAdvertising = 0;
+        double totalSpent = totalGoodsSpent + spentOnAdvertising;
+
+        double lastIncome = 0;
+        QSqlQuery lastIncomeQuery(db);
+        if (lastIncomeQuery.exec("SELECT Income FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastIncomeQuery.next()) {
+            lastIncome = lastIncomeQuery.value(0).toDouble();
+        }
+
+        double income = lastIncome - totalSpent;
+
+        if (commentString.endsWith(", ")) {
+            commentString.chop(2);
+        }
+
+        QSqlQuery insertExpenseQuery(db);
+        insertExpenseQuery.prepare(R"(
+            INSERT INTO incomeAndExpenses
+            (Total_spent, Total_earned, spent_on_advertising, spent_on_goods, Income, Comment, date)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        )");
+
+        double totalEarned = 0;
+
+        insertExpenseQuery.addBindValue(totalSpent);
+        insertExpenseQuery.addBindValue(totalEarned);
+        insertExpenseQuery.addBindValue(spentOnAdvertising);
+        insertExpenseQuery.addBindValue(totalGoodsSpent);
+        insertExpenseQuery.addBindValue(income);
+        insertExpenseQuery.addBindValue(commentString);
+        insertExpenseQuery.addBindValue(date);
+
+        if (!insertExpenseQuery.exec()) {
+            qDebug() << "Failed to insert total expense:" << insertExpenseQuery.lastError().text();
+        } else {
+            qDebug() << "Total expense for order recorded: -" << totalGoodsSpent;
+            qDebug() << "Comment: " << commentString;
+        }
+    }
 }
+
 
 void AddProductWindow::on_menuPushButton_clicked()
 {

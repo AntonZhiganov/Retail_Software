@@ -30,6 +30,7 @@ IncomeAndExpensesWindow::IncomeAndExpensesWindow(QWidget *parent)
             spent_on_advertising FLOAT,
             spent_on_goods FLOAT,
             Income FLOAT,
+            Comment TEXT,
             date TEXT
         )
     )";
@@ -49,8 +50,8 @@ IncomeAndExpensesWindow::IncomeAndExpensesWindow(QWidget *parent)
             QSqlQuery insertQuery(db);
             insertQuery.prepare(R"(
             INSERT INTO incomeAndExpenses
-            (Total_spent, Total_earned, spent_on_advertising, spent_on_goods, Income, date)
-            VALUES (?, ?, ?, ?, ?, ?)
+            (Total_spent, Total_earned, spent_on_advertising, spent_on_goods, Income, Comment, date)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         )");
 
             insertQuery.addBindValue(0);
@@ -58,6 +59,7 @@ IncomeAndExpensesWindow::IncomeAndExpensesWindow(QWidget *parent)
             insertQuery.addBindValue(0);
             insertQuery.addBindValue(0);
             insertQuery.addBindValue(0);
+            insertQuery.addBindValue("-");
             insertQuery.addBindValue(QDate::currentDate().toString("yyyy-MM-dd"));
 
             if (!insertQuery.exec()) {
@@ -80,13 +82,13 @@ void IncomeAndExpensesWindow::loadData() {
     }
 
     QSqlQuery query(db);
-    if (!query.exec("SELECT Total_spent, Total_earned, spent_on_advertising, spent_on_goods, Income, date FROM incomeAndExpenses")) {
+    if (!query.exec("SELECT Total_spent, Total_earned, spent_on_advertising, spent_on_goods, Income, Comment, date FROM incomeAndExpenses")) {
         qDebug() << "Failed to select data:" << query.lastError().text();
         return;
     }
 
-    ui->IncomeAndExpensesTableWidget->clear();
-    QStringList headers = {"Total_spent", "Total_earned", "spent_on_advertising", "spent_on_goods", "Income", "date"};
+    ui->IncomeAndExpensesTableWidget->setRowCount(0);
+    QStringList headers = {"Total_spent", "Total_earned", "spent_on_advertising", "spent_on_goods", "Income", "Comment", "date"};
     ui->IncomeAndExpensesTableWidget->setColumnCount(headers.size());
     ui->IncomeAndExpensesTableWidget->setHorizontalHeaderLabels(headers);
 
