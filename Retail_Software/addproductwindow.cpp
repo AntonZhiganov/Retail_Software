@@ -118,16 +118,23 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
     }
 
     if (totalGoodsSpent > 0) {
-        double spentOnAdvertising = 0;
-        double totalSpent = totalGoodsSpent + spentOnAdvertising;
-
         double lastIncome = 0;
-        QSqlQuery lastIncomeQuery(db);
-        if (lastIncomeQuery.exec("SELECT Income FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastIncomeQuery.next()) {
-            lastIncome = lastIncomeQuery.value(0).toDouble();
+        double lastTotalSpent = 0;
+        double lastSpentOnGoods = 0;
+
+        QSqlQuery lastQuery(db);
+        if (lastQuery.exec("SELECT Income, Total_spent, spent_on_goods FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
+            lastIncome = lastQuery.value(0).toDouble();
+            lastTotalSpent = lastQuery.value(1).toDouble();
+            lastSpentOnGoods = lastQuery.value(2).toDouble();
         }
 
-        double income = lastIncome - totalSpent;
+
+        double spentOnAdvertising = 0;
+        double newSpentOnGoods = lastSpentOnGoods + totalGoodsSpent;
+        double newTotalSpent = lastTotalSpent + totalGoodsSpent;
+        double totalEarned = 0;
+        double income = lastIncome - totalGoodsSpent;
 
         if (commentString.endsWith(", ")) {
             commentString.chop(2);
@@ -140,12 +147,10 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
             VALUES (?, ?, ?, ?, ?, ?, ?)
         )");
 
-        double totalEarned = 0;
-
-        insertExpenseQuery.addBindValue(totalSpent);
+        insertExpenseQuery.addBindValue(newTotalSpent);
         insertExpenseQuery.addBindValue(totalEarned);
         insertExpenseQuery.addBindValue(spentOnAdvertising);
-        insertExpenseQuery.addBindValue(totalGoodsSpent);
+        insertExpenseQuery.addBindValue(newSpentOnGoods);
         insertExpenseQuery.addBindValue(income);
         insertExpenseQuery.addBindValue(commentString);
         insertExpenseQuery.addBindValue(date);
@@ -154,7 +159,9 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
             qDebug() << "Failed to insert total expense:" << insertExpenseQuery.lastError().text();
         } else {
             qDebug() << "Total expense for order recorded: -" << totalGoodsSpent;
-            qDebug() << "Comment: " << commentString;
+            qDebug() << "New Total_spent: " << newTotalSpent;
+            qDebug() << "New spent_on_goods: " << newSpentOnGoods;
+            qDebug() << "New Income: " << income;
         }
     }
 }
