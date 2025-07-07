@@ -58,7 +58,39 @@ void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked(){
         qDebug() << "Advertising record added!";
     }
 
+    double lastIncome = 0;
+    QSqlQuery incomeQuery(db);
+    if (incomeQuery.exec("SELECT Income FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && incomeQuery.next()) {
+        lastIncome = incomeQuery.value(0).toDouble();
+    }
 
+    double spentOnAdvertising = price;
+    double spentOnGoods = 0;
+    double totalSpent = spentOnAdvertising + spentOnGoods;
+    double totalEarned = 0;
+    double income = lastIncome - totalSpent;
+    QString comment = QString("Advertising: seller %1").arg(seller);
+
+    QSqlQuery insertExpenseQuery(db);
+    insertExpenseQuery.prepare(R"(
+        INSERT INTO incomeAndExpenses
+        (Total_spent, Total_earned, spent_on_advertising, spent_on_goods, Income, Comment, date)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    )");
+
+    insertExpenseQuery.addBindValue(totalSpent);
+    insertExpenseQuery.addBindValue(totalEarned);
+    insertExpenseQuery.addBindValue(spentOnAdvertising);
+    insertExpenseQuery.addBindValue(spentOnGoods);
+    insertExpenseQuery.addBindValue(income);
+    insertExpenseQuery.addBindValue(comment);
+    insertExpenseQuery.addBindValue(date);
+
+    if (!insertExpenseQuery.exec()) {
+        qDebug() << "Failed to insert expense record for advertising:" << insertExpenseQuery.lastError().text();
+    } else {
+        qDebug() << "Advertising expense recorded in incomeAndExpenses: -" << price;
+    }
 }
 
 void AdvertisingWindow::on_menuPushButton_clicked()
