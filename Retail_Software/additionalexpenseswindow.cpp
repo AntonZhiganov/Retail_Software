@@ -2,6 +2,7 @@
 #include "ui_additionalexpenseswindow.h"
 #include "advertisingwindow.h"
 #include "mainwindow.h"
+#include "defectiveproductswindow.h"
 #include <QMessageBox>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
@@ -21,12 +22,14 @@ AdditionalExpensesWindow::~AdditionalExpensesWindow()
 
 void AdditionalExpensesWindow::on_defectiveProductPushButton_clicked()
 {
-    QMessageBox::information(this, "Defective Product", "'Defective Product' pressed");
+    DefectiveProductsWindow * defectiveproductswindow = new DefectiveProductsWindow();
+    defectiveproductswindow->show();
+    this -> hide();
 }
 
 void AdditionalExpensesWindow::on_advertisingPushButton_clicked()
 {
-   AdvertisingWindow * advertisingwindow = new AdvertisingWindow();
+    AdvertisingWindow * advertisingwindow = new AdvertisingWindow();
     advertisingwindow->show();
     this -> hide();
 }
