@@ -66,16 +66,15 @@ void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked()
 
     double lastIncome = 0;
     double lastTotalSpent = 0;
-    double lastSpentOnAdvertising = 0;
+    double spentOnAdvertising = price;
 
     QSqlQuery lastQuery(db);
     if (lastQuery.exec("SELECT Income, Total_spent, spent_on_advertising FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
         lastIncome = lastQuery.value(0).toDouble();
         lastTotalSpent = lastQuery.value(1).toDouble();
-        lastSpentOnAdvertising = lastQuery.value(2).toDouble();
     }
 
-    double newSpentOnAdvertising = lastSpentOnAdvertising + price;
+    double newSpentOnAdvertising = spentOnAdvertising;
     double newTotalSpent = lastTotalSpent + price;
     double income = lastIncome - price;
     double totalEarned = 0;

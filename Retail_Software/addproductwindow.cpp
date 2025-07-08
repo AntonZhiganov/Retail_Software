@@ -120,18 +120,17 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
     if (totalGoodsSpent > 0) {
         double lastIncome = 0;
         double lastTotalSpent = 0;
-        double lastSpentOnGoods = 0;
+        double spentOnGoods = totalGoodsSpent;
 
         QSqlQuery lastQuery(db);
         if (lastQuery.exec("SELECT Income, Total_spent, spent_on_goods FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
             lastIncome = lastQuery.value(0).toDouble();
             lastTotalSpent = lastQuery.value(1).toDouble();
-            lastSpentOnGoods = lastQuery.value(2).toDouble();
         }
 
 
         double spentOnAdvertising = 0;
-        double newSpentOnGoods = lastSpentOnGoods + totalGoodsSpent;
+        double newSpentOnGoods = spentOnGoods;
         double newTotalSpent = lastTotalSpent + totalGoodsSpent;
         double totalEarned = 0;
         double income = lastIncome - totalGoodsSpent;
@@ -164,6 +163,10 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
             qDebug() << "New Income: " << income;
         }
     }
+
+    WarehoseWindow *warehosewindow = new WarehoseWindow();
+    warehosewindow->show();
+    this -> hide();
 }
 
 
