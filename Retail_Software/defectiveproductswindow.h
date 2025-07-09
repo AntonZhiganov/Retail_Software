@@ -20,6 +20,7 @@ private:
 
 private slots:
     void on_menuPushButton_clicked();
+    void on_confirmPushButton_clicked();
 };
 
 #endif // DEFECTIVEPRODUCTSWINDOW_H
