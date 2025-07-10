@@ -25,12 +25,12 @@ IncomeAndExpensesWindow::IncomeAndExpensesWindow(QWidget *parent)
     QString createIncomeAndExpensesTableQuery = R"(
         CREATE TABLE IF NOT EXISTS incomeAndExpenses (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            Total_spent FLOAT,
-            Total_earned FLOAT,
+            total_spent FLOAT,
+            total_earned FLOAT,
             spent_on_advertising FLOAT,
             spent_on_goods FLOAT,
-            Income FLOAT,
-            Comment TEXT,
+            income FLOAT,
+            comment TEXT,
             date TEXT
         )
     )";
@@ -50,7 +50,7 @@ IncomeAndExpensesWindow::IncomeAndExpensesWindow(QWidget *parent)
             QSqlQuery insertQuery(db);
             insertQuery.prepare(R"(
             INSERT INTO incomeAndExpenses
-            (Total_spent, Total_earned, spent_on_advertising, spent_on_goods, Income, Comment, date)
+            (total_spent, total_earned, spent_on_advertising, spent_on_goods, income, comment, date)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         )");
 
@@ -82,7 +82,7 @@ void IncomeAndExpensesWindow::loadData() {
     }
 
     QSqlQuery query(db);
-    if (!query.exec("SELECT Total_spent, Total_earned, spent_on_advertising, spent_on_goods, Income, Comment, date FROM incomeAndExpenses")) {
+    if (!query.exec("SELECT total_spent, total_earned, spent_on_advertising, spent_on_goods, income, comment, date FROM incomeAndExpenses")) {
         qDebug() << "Failed to select data:" << query.lastError().text();
         return;
     }

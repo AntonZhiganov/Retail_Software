@@ -69,7 +69,7 @@ void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked()
     double spentOnAdvertising = price;
 
     QSqlQuery lastQuery(db);
-    if (lastQuery.exec("SELECT Income, Total_spent, spent_on_advertising FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
+    if (lastQuery.exec("SELECT income, total_spent, spent_on_advertising FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
         lastIncome = lastQuery.value(0).toDouble();
         lastTotalSpent = lastQuery.value(1).toDouble();
     }
@@ -84,7 +84,7 @@ void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked()
     QSqlQuery insertExpenseQuery(db);
     insertExpenseQuery.prepare(R"(
         INSERT INTO incomeAndExpenses
-        (Total_spent, Total_earned, spent_on_advertising, spent_on_goods, Income, Comment, date)
+        (total_spent, total_earned, spent_on_advertising, spent_on_goods, income, comment, date)
         VALUES (?, ?, ?, ?, ?, ?, ?)
     )");
 
@@ -100,9 +100,9 @@ void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked()
         qDebug() << "Failed to insert expense record for advertising:" << insertExpenseQuery.lastError().text();
     } else {
         qDebug() << "Advertising expense recorded in incomeAndExpenses.";
-        qDebug() << "New Total_spent: " << newTotalSpent;
+        qDebug() << "New total_spent: " << newTotalSpent;
         qDebug() << "New spent_on_advertising: " << newSpentOnAdvertising;
-        qDebug() << "New Income: " << income;
+        qDebug() << "New income: " << income;
     }
 }
 

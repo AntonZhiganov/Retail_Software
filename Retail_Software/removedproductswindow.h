@@ -20,6 +20,7 @@ private:
 
 private slots:
     void on_menuPushButton_clicked();
+    void loadData();
 };
 
 #endif // REMOVEDPRODUCTSWINDOW_H
