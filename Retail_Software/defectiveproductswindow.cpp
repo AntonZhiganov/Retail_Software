@@ -1,7 +1,7 @@
 #include "defectiveproductswindow.h"
 #include "ui_defectiveproductswindow.h"
 #include "mainwindow.h"
-#include "warehosewindow.h"
+#include "removedproductswindow.h"
 #include <QMessageBox>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -80,8 +80,8 @@ void DefectiveProductsWindow::on_confirmPushButton_clicked()
 
         else {
 
-            WarehoseWindow *warehosewindow = new WarehoseWindow();
-            warehosewindow ->show();
+            RemovedProductsWindow *removedproductwindow = new RemovedProductsWindow();
+            removedproductwindow ->show();
             this -> hide();
         }
 
