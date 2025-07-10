@@ -25,6 +25,7 @@ private:
     QVBoxLayout* scrollLayout;
     QList<QLineEdit*> nameEdits;
     QList<QLineEdit*> priceEdits;
+    QList<QLineEdit*> sellingPriceEdits;
     QList<QSpinBox*> quantitySpinBoxes;
 
 private:

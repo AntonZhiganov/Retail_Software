@@ -52,6 +52,7 @@ void WarehoseWindow::openDB()
             name TEXT ,
             quantity INTEGER ,
             price FLOAT ,
+            selling_price FLOAT,
             date TEXT
         )
     )";
@@ -66,20 +67,20 @@ void WarehoseWindow::openDB()
 void WarehoseWindow::loadProducts()
 {
     QSqlQuery query(db);
-    if (!query.exec("SELECT id, name, quantity, price, date FROM products")) {
+    if (!query.exec("SELECT id, name, quantity, price, selling_price, date FROM products")) {
         qDebug() << "Failed to fetch products:" << query.lastError().text();
         return;
     }
 
     ui->productTableWidget->clear();
-    ui->productTableWidget->setColumnCount(5);
-    ui->productTableWidget->setHorizontalHeaderLabels({"ID", "Name", "Quantity", "Price", "Date"});
+    ui->productTableWidget->setColumnCount(6);
+    ui->productTableWidget->setHorizontalHeaderLabels({"ID", "Name", "Quantity", "Price", "Selling price", "Date"});
     ui->productTableWidget->setRowCount(0);
 
     int row = 0;
     while (query.next()) {
         ui->productTableWidget->insertRow(row);
-        for (int col = 0; col < 5; ++col) {
+        for (int col = 0; col < 6; ++col) {
             ui->productTableWidget->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
         }
         ++row;

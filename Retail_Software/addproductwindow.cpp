@@ -29,6 +29,9 @@ void AddProductWindow::on_newProductTypePushButton_clicked()
 {
     int index = nameEdits.size() + 1;
 
+    QLabel* sellingPriceName = new QLabel(QString("selling price %1 (for everyone)").arg(index), this);
+    QLineEdit* sellingPriceLineEdit = new QLineEdit(this);
+
     QLabel* nameName = new QLabel(QString("Product name %1").arg(index), this);
     QLineEdit* nameLineEdit = new QLineEdit(this);
 
@@ -40,6 +43,8 @@ void AddProductWindow::on_newProductTypePushButton_clicked()
     quantitySpinBox->setMinimum(0);
     quantitySpinBox->setMaximum(1000);
 
+    ui->verticalLayout->insertWidget(0, sellingPriceLineEdit);
+    ui->verticalLayout->insertWidget(0, sellingPriceName);
     ui->verticalLayout->insertWidget(0, quantitySpinBox);
     ui->verticalLayout->insertWidget(0, quantityName);
     ui->verticalLayout->insertWidget(0, priceLineEdit);
@@ -49,6 +54,7 @@ void AddProductWindow::on_newProductTypePushButton_clicked()
 
     nameEdits.append(nameLineEdit);
     priceEdits.append(priceLineEdit);
+    sellingPriceEdits.append(sellingPriceLineEdit);
     quantitySpinBoxes.append(quantitySpinBox);
 }
 
@@ -68,6 +74,7 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
         QString name = nameEdits[pos]->text().trimmed();
         bool priceOk;
         double price = priceEdits[pos]->text().toDouble(&priceOk);
+        double sellingPrice = sellingPriceEdits[pos]->text().toDouble();
         if (!priceOk) {
             qDebug() << "Invalid price input at index" << pos;
             continue;
@@ -93,6 +100,7 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
             updateQuery.prepare("UPDATE products SET quantity = ?, price = ?, date = ? WHERE name = ?");
             updateQuery.addBindValue(newQuantity);
             updateQuery.addBindValue(price);
+            updateQuery.addBindValue(sellingPrice);
             updateQuery.addBindValue(date);
             updateQuery.addBindValue(name);
 
@@ -103,10 +111,11 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
             }
         } else {
             QSqlQuery insertQuery(db);
-            insertQuery.prepare("INSERT INTO products (name, quantity, price, date) VALUES (?, ?, ?, ?)");
+            insertQuery.prepare("INSERT INTO products (name, quantity, price, selling_price, date) VALUES (?, ?, ?, ?, ?)");
             insertQuery.addBindValue(name);
             insertQuery.addBindValue(quantity);
             insertQuery.addBindValue(price);
+            insertQuery.addBindValue(sellingPrice);
             insertQuery.addBindValue(date);
 
             if (!insertQuery.exec()) {
