@@ -12,6 +12,7 @@ DefectiveProductsWindow::DefectiveProductsWindow(QWidget *parent)
     , ui(new Ui::DefectiveProductsWindow)
 {
     ui->setupUi(this);
+    ui->dateEdit->setDate(QDate::currentDate());
 }
 
 DefectiveProductsWindow::~DefectiveProductsWindow()
@@ -76,6 +77,23 @@ void DefectiveProductsWindow::on_confirmPushButton_clicked()
 
         if (!updateQuery.exec()) {
             qDebug() << "Failed to update/remove product:" << updateQuery.lastError().text();
+        }
+
+        QString comment = ui->resonLineEdit->text().trimmed();
+        QString date = ui->dateEdit->date().toString("yyyy-MM-dd");
+
+        QSqlQuery insertRemoved(db);
+        insertRemoved.prepare(R"(
+            INSERT INTO RemovedProducts (name, quantity, comment, date)
+            VALUES (?, ?, ?, ?)
+        )");
+        insertRemoved.addBindValue(productName);
+        insertRemoved.addBindValue(quantityToRemove);
+        insertRemoved.addBindValue(comment);
+        insertRemoved.addBindValue(date);
+
+        if (!insertRemoved.exec()) {
+            qDebug() << "Failed to insert into RemovedProducts:" << insertRemoved.lastError().text();
         }
 
         else {

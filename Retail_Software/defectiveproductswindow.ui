@@ -50,7 +50,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Enter product name</string>
+          <string>Enter product name:</string>
          </property>
         </widget>
        </item>
@@ -62,7 +62,31 @@
           </font>
          </property>
          <property name="text">
-          <string>Enter quantity of product</string>
+          <string>Enter quantity of product:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="resonLabel">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Reason for deletion:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Date: </string>
          </property>
         </widget>
        </item>
@@ -94,6 +118,24 @@
        </item>
        <item>
         <widget class="QLineEdit" name="productQuantityLineEdit">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="resonLineEdit">
+         <property name="font">
+          <font>
+           <pointsize>20</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDateEdit" name="dateEdit">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
