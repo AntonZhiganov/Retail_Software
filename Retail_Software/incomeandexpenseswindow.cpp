@@ -88,7 +88,7 @@ void IncomeAndExpensesWindow::loadData() {
     }
 
     ui->IncomeAndExpensesTableWidget->setRowCount(0);
-    QStringList headers = {"Total_spent", "Total_earned", "Spent_on_this_advertising", "Spent_on_this_order", "Income", "Comment", "date"};
+    QStringList headers = {"Total spent", "Total earned", "Spent on this advertising", "Spent on this order", "Income", "Comment", "date"};
     ui->IncomeAndExpensesTableWidget->setColumnCount(headers.size());
     ui->IncomeAndExpensesTableWidget->setHorizontalHeaderLabels(headers);
 
