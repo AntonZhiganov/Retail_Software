@@ -8,6 +8,8 @@
 #include <QTableWidgetItem>
 #include <QDebug>
 #include <QDate>
+#include <QInputDialog>
+#include <QMessageBox>
 
 SaleWindow::SaleWindow(QWidget *parent)
     : QWidget(parent)
@@ -69,6 +71,13 @@ void SaleWindow::on_confirmPushButton_clicked() {
     QSqlDatabase db = QSqlDatabase::database("WarehoseConnection");
     if (!db.isOpen()) return;
 
+    QString clientName = QInputDialog::getText(this, "Client Name", "Enter client name:");
+
+    if (clientName.trimmed().isEmpty()) {
+        QMessageBox::warning(this, "Input Error", "Client name cannot be empty.");
+        return;
+    }
+
     double totalEarned = 0;
     QString comment;
 
@@ -85,7 +94,7 @@ void SaleWindow::on_confirmPushButton_clicked() {
 
             totalEarned += sellingPrice * toSell;
             comment += name + " x" + QString::number(toSell) + ", ";
-            if (comment.endsWith(", ")) comment.chop(2);
+            comment = "Client: " + clientName + " — " + comment;
 
             int newQuantity = inStock - toSell;
             QSqlQuery query(db);
