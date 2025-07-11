@@ -7,6 +7,7 @@
 #include "additionalexpenseswindow.h"
 #include "salewindow.h"
 #include "removedproductswindow.h"
+#include "informationaboutclientswindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -59,7 +60,9 @@ void MainWindow::on_incomeAndExpensesButton_clicked()
 
 void MainWindow::on_clientsButton_clicked()
 {
-    QMessageBox::information(this, "Information about clients", "'Information about clients' pressed");
+    InformationAboutClientsWindow *informationaboutclientsWindow = new InformationAboutClientsWindow();
+    informationaboutclientsWindow ->show();
+    this -> hide();
 }
 
 void MainWindow::on_ordersButton_clicked()

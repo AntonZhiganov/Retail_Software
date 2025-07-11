@@ -15,6 +15,7 @@ SOURCES += \
     advertisingwindow.cpp \
     defectiveproductswindow.cpp \
     incomeandexpenseswindow.cpp \
+    informationaboutclientswindow.cpp \
     main.cpp \
     mainwindow.cpp \
     removedproductswindow.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     advertisingwindow.h \
     defectiveproductswindow.h \
     incomeandexpenseswindow.h \
+    informationaboutclientswindow.h \
     mainwindow.h \
     removedproductswindow.h \
     salewindow.h \
@@ -40,6 +42,7 @@ FORMS += \
     advertisingwindow.ui \
     defectiveproductswindow.ui \
     incomeandexpenseswindow.ui \
+    informationaboutclientswindow.ui \
     mainwindow.ui \
     removedproductswindow.ui \
     salewindow.ui \
