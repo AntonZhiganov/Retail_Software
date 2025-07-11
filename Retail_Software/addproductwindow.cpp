@@ -97,7 +97,7 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
             int newQuantity = existingQuantity + quantity;
 
             QSqlQuery updateQuery(db);
-            updateQuery.prepare("UPDATE products SET quantity = ?, price = ?, date = ? WHERE name = ?");
+            updateQuery.prepare("UPDATE products SET quantity = ?, price = ?, selling_price = ?, date = ? WHERE name = ?");
             updateQuery.addBindValue(newQuantity);
             updateQuery.addBindValue(price);
             updateQuery.addBindValue(sellingPrice);

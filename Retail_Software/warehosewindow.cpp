@@ -81,7 +81,16 @@ void WarehoseWindow::loadProducts()
     while (query.next()) {
         ui->productTableWidget->insertRow(row);
         for (int col = 0; col < 6; ++col) {
-            ui->productTableWidget->setItem(row, col, new QTableWidgetItem(query.value(col).toString()));
+            QVariant value = query.value(col);
+            QString text;
+
+            if (col == 3 || col == 4) {
+                text = QString::number(value.toDouble(), 'f', 2);
+            } else {
+                text = value.toString();
+            }
+
+            ui->productTableWidget->setItem(row, col, new QTableWidgetItem(text));
         }
         ++row;
     }

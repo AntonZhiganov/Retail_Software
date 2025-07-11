@@ -51,7 +51,7 @@ void SaleWindow::loadProducts() {
         int stock = query.value(2).toInt();
 
         ui->saleTableWidget->setItem(row, 0, new QTableWidgetItem(name));
-        ui->saleTableWidget->setItem(row, 1, new QTableWidgetItem(QString::number(price)));
+        ui->saleTableWidget->setItem(row, 1, new QTableWidgetItem(QString::number(price, 'f', 1)));
         ui->saleTableWidget->setItem(row, 2, new QTableWidgetItem(QString::number(stock)));
 
         QSpinBox *quantitySpin = new QSpinBox();
@@ -83,8 +83,14 @@ void SaleWindow::on_confirmPushButton_clicked() {
 
             if (toSell <= 0 || toSell > inStock) continue;
 
+            QSqlQuery priceQuery(db);
+            priceQuery.prepare("SELECT price FROM products WHERE name = ?");
+            priceQuery.addBindValue(name);
+            if (priceQuery.exec() && priceQuery.next()) {
+            }
+
             totalEarned += sellingPrice * toSell;
-            comment += name + " x" + QString::number(toSell) + ", ";
+            comment += name + " x" + QString::number(toSell) + QString::number(sellingPrice * toSell, 'f', 2) + "), ";;
 
             int newQuantity = inStock - toSell;
             QSqlQuery query(db);
@@ -113,6 +119,7 @@ void SaleWindow::on_confirmPushButton_clicked() {
             prevSpent = lastQuery.value(1).toDouble();
         }
 
+        double newTotalSpent = prevSpent;
         double newIncome = prevIncome + totalEarned;
         QString date = QDate::currentDate().toString("yyyy-MM-dd");
         if (comment.endsWith(", ")) comment.chop(2);
@@ -123,7 +130,7 @@ void SaleWindow::on_confirmPushButton_clicked() {
             (total_spent, total_earned, spent_on_advertising, spent_on_goods, income, comment, date)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         )");
-        insertQuery.addBindValue(prevSpent);
+        insertQuery.addBindValue(newTotalSpent);
         insertQuery.addBindValue(totalEarned);
         insertQuery.addBindValue(0);
         insertQuery.addBindValue(0);
@@ -134,13 +141,14 @@ void SaleWindow::on_confirmPushButton_clicked() {
         if (!insertQuery.exec()) {
             qDebug() << "Error inserting into incomeAndExpenses:" << insertQuery.lastError().text();
         } else {
-            qDebug() << "Sale recorded. Total earned +" << totalEarned;
+            qDebug() << "Sale recorded";
         }
     }
 
     ui->saleTableWidget->setRowCount(0);
     loadProducts();
 }
+
 
 void SaleWindow::on_menuPushButton_clicked()
 {
