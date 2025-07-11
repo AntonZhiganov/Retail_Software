@@ -66,18 +66,20 @@ void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked()
 
     double lastIncome = 0;
     double lastTotalSpent = 0;
+    double lastTotalEarned = 0;
     double spentOnService = price;
 
     QSqlQuery lastQuery(db);
-    if (lastQuery.exec("SELECT income, total_spent, spent_or_earned_for_this_order FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
+    if (lastQuery.exec("SELECT income, total_spent, total_earned, spent_or_earned_for_this_order FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
         lastIncome = lastQuery.value(0).toDouble();
         lastTotalSpent = lastQuery.value(1).toDouble();
+        lastTotalEarned = lastQuery.value(2).toDouble();
     }
 
     double newSpentOnService = spentOnService;
     double newTotalSpent = lastTotalSpent + price;
     double income = lastIncome - price;
-    double totalEarned = 0;
+    double totalEarned = lastTotalEarned;
     QString comment = QString("Advertising: seller %1").arg(seller);
 
     QSqlQuery insertExpenseQuery(db);
@@ -87,10 +89,10 @@ void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked()
         VALUES (?, ?, ?, ?, ?, ?)
     )");
 
-    insertExpenseQuery.addBindValue(newTotalSpent);
-    insertExpenseQuery.addBindValue(totalEarned);
-    insertExpenseQuery.addBindValue(spentOnService);
-    insertExpenseQuery.addBindValue(income);
+    insertExpenseQuery.addBindValue(QString::number(newTotalSpent, 'f', 2));
+    insertExpenseQuery.addBindValue(QString::number(totalEarned, 'f', 2));
+    insertExpenseQuery.addBindValue("-" + QString::number(spentOnService, 'f', 2));
+    insertExpenseQuery.addBindValue(QString::number(income, 'f', 2));
     insertExpenseQuery.addBindValue(comment);
     insertExpenseQuery.addBindValue(date);
 

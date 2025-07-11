@@ -126,10 +126,10 @@ void SaleWindow::on_confirmPushButton_clicked() {
             (total_spent, total_earned, spent_or_earned_for_this_order, income, comment, date)
             VALUES (?, ?, ?, ?, ?, ?)
         )");
-        insertQuery.addBindValue(prevSpent);
-        insertQuery.addBindValue(newTotalEarned);
-        insertQuery.addBindValue(totalEarned);
-        insertQuery.addBindValue(newIncome);
+        insertQuery.addBindValue(QString::number(prevSpent, 'f', 2));
+        insertQuery.addBindValue(QString::number(newTotalEarned, 'f', 2));
+        insertQuery.addBindValue("+" + QString::number(totalEarned, 'f', 2));
+        insertQuery.addBindValue(QString::number(newIncome, 'f', 2));
         insertQuery.addBindValue(comment);
         insertQuery.addBindValue(date);
 

@@ -27,7 +27,7 @@ IncomeAndExpensesWindow::IncomeAndExpensesWindow(QWidget *parent)
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             total_spent FLOAT,
             total_earned FLOAT,
-            spent_or_earned_for_this_order FLOAT,
+            spent_or_earned_for_this_order TEXT,
             income FLOAT,
             comment TEXT,
             date TEXT

@@ -158,10 +158,12 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
             VALUES (?, ?, ?, ?, ?, ?)
         )");
 
-        insertExpenseQuery.addBindValue(newTotalSpent);
-        insertExpenseQuery.addBindValue(totalEarned);
-        insertExpenseQuery.addBindValue(totalGoodsSpent);
-        insertExpenseQuery.addBindValue(income);
+        QString spentThisOrder = "-" + QString::number(totalGoodsSpent, 'f', 2);
+
+        insertExpenseQuery.addBindValue(QString::number(newTotalSpent, 'f', 2));
+        insertExpenseQuery.addBindValue(QString::number(totalEarned, 'f', 2));
+        insertExpenseQuery.addBindValue(spentThisOrder);
+        insertExpenseQuery.addBindValue(QString::number(income, 'f', 2));
         insertExpenseQuery.addBindValue(commentString);
         insertExpenseQuery.addBindValue(date);
 
