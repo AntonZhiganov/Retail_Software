@@ -74,9 +74,14 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
         QString name = nameEdits[pos]->text().trimmed();
         bool priceOk;
         double price = priceEdits[pos]->text().toDouble(&priceOk);
-        double sellingPrice = sellingPriceEdits[pos]->text().toDouble();
         if (!priceOk) {
             qDebug() << "Invalid price input at index" << pos;
+            continue;
+        }
+        bool sellingPriceOk;
+        double sellingPrice = sellingPriceEdits[pos]->text().toDouble(&sellingPriceOk);
+        if (!sellingPriceOk) {
+            qDebug() << "Invalid selling price input at index" << pos;
             continue;
         }
 
@@ -129,19 +134,17 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
     if (totalGoodsSpent > 0) {
         double lastIncome = 0;
         double lastTotalSpent = 0;
-        double spentOnGoods = totalGoodsSpent;
+        double lastTotalEarned = 0;
 
         QSqlQuery lastQuery(db);
-        if (lastQuery.exec("SELECT income, total_spent, spent_on_goods FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
+        if (lastQuery.exec("SELECT income, total_spent, total_earned FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
             lastIncome = lastQuery.value(0).toDouble();
             lastTotalSpent = lastQuery.value(1).toDouble();
+            lastTotalEarned = lastQuery.value(2).toDouble();
         }
 
-
-        double spentOnAdvertising = 0;
-        double newSpentOnGoods = spentOnGoods;
         double newTotalSpent = lastTotalSpent + totalGoodsSpent;
-        double totalEarned = 0;
+        double totalEarned = lastTotalEarned;
         double income = lastIncome - totalGoodsSpent;
 
         if (commentString.endsWith(", ")) {
@@ -151,14 +154,13 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
         QSqlQuery insertExpenseQuery(db);
         insertExpenseQuery.prepare(R"(
             INSERT INTO incomeAndExpenses
-            (total_spent, total_earned, spent_on_advertising, spent_on_goods, income, comment, date)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            (total_spent, total_earned, spent_or_earned_for_this_order, income, comment, date)
+            VALUES (?, ?, ?, ?, ?, ?)
         )");
 
         insertExpenseQuery.addBindValue(newTotalSpent);
         insertExpenseQuery.addBindValue(totalEarned);
-        insertExpenseQuery.addBindValue(spentOnAdvertising);
-        insertExpenseQuery.addBindValue(newSpentOnGoods);
+        insertExpenseQuery.addBindValue(totalGoodsSpent);
         insertExpenseQuery.addBindValue(income);
         insertExpenseQuery.addBindValue(commentString);
         insertExpenseQuery.addBindValue(date);
@@ -168,7 +170,6 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
         } else {
             qDebug() << "Total expense for order recorded: -" << totalGoodsSpent;
             qDebug() << "New total_spent: " << newTotalSpent;
-            qDebug() << "New spent_on_goods: " << newSpentOnGoods;
             qDebug() << "New income: " << income;
         }
     }

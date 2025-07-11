@@ -66,32 +66,30 @@ void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked()
 
     double lastIncome = 0;
     double lastTotalSpent = 0;
-    double spentOnAdvertising = price;
+    double spentOnService = price;
 
     QSqlQuery lastQuery(db);
-    if (lastQuery.exec("SELECT income, total_spent, spent_on_advertising FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
+    if (lastQuery.exec("SELECT income, total_spent, spent_or_earned_for_this_order FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
         lastIncome = lastQuery.value(0).toDouble();
         lastTotalSpent = lastQuery.value(1).toDouble();
     }
 
-    double newSpentOnAdvertising = spentOnAdvertising;
+    double newSpentOnService = spentOnService;
     double newTotalSpent = lastTotalSpent + price;
     double income = lastIncome - price;
     double totalEarned = 0;
-    double spentOnGoods = 0;
     QString comment = QString("Advertising: seller %1").arg(seller);
 
     QSqlQuery insertExpenseQuery(db);
     insertExpenseQuery.prepare(R"(
         INSERT INTO incomeAndExpenses
-        (total_spent, total_earned, spent_on_advertising, spent_on_goods, income, comment, date)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        (total_spent, total_earned, spent_or_earned_for_this_order, income, comment, date)
+        VALUES (?, ?, ?, ?, ?, ?)
     )");
 
     insertExpenseQuery.addBindValue(newTotalSpent);
     insertExpenseQuery.addBindValue(totalEarned);
-    insertExpenseQuery.addBindValue(newSpentOnAdvertising);
-    insertExpenseQuery.addBindValue(spentOnGoods);
+    insertExpenseQuery.addBindValue(spentOnService);
     insertExpenseQuery.addBindValue(income);
     insertExpenseQuery.addBindValue(comment);
     insertExpenseQuery.addBindValue(date);
@@ -101,7 +99,7 @@ void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked()
     } else {
         qDebug() << "Advertising expense recorded in incomeAndExpenses.";
         qDebug() << "New total_spent: " << newTotalSpent;
-        qDebug() << "New spent_on_advertising: " << newSpentOnAdvertising;
+        qDebug() << "New spent_on_advertising: " << newSpentOnService;
         qDebug() << "New income: " << income;
     }
 }

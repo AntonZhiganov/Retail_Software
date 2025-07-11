@@ -83,14 +83,9 @@ void SaleWindow::on_confirmPushButton_clicked() {
 
             if (toSell <= 0 || toSell > inStock) continue;
 
-            QSqlQuery priceQuery(db);
-            priceQuery.prepare("SELECT price FROM products WHERE name = ?");
-            priceQuery.addBindValue(name);
-            if (priceQuery.exec() && priceQuery.next()) {
-            }
-
             totalEarned += sellingPrice * toSell;
-            comment += name + " x" + QString::number(toSell) + QString::number(sellingPrice * toSell, 'f', 2) + "), ";;
+            comment += name + " x" + QString::number(toSell) + ", ";
+            if (comment.endsWith(", ")) comment.chop(2);
 
             int newQuantity = inStock - toSell;
             QSqlQuery query(db);
@@ -112,28 +107,28 @@ void SaleWindow::on_confirmPushButton_clicked() {
     }
 
     if (totalEarned > 0) {
-        double prevIncome = 0, prevSpent = 0;
+        double prevIncome = 0, prevSpent = 0, prevTotalEarned = 0;
         QSqlQuery lastQuery(db);
-        if (lastQuery.exec("SELECT income, total_spent FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
+        if (lastQuery.exec("SELECT income, total_spent, total_earned FROM incomeAndExpenses ORDER BY id DESC LIMIT 1") && lastQuery.next()) {
             prevIncome = lastQuery.value(0).toDouble();
             prevSpent = lastQuery.value(1).toDouble();
+            prevTotalEarned = lastQuery.value(2).toDouble();
         }
 
-        double newTotalSpent = prevSpent;
         double newIncome = prevIncome + totalEarned;
+        double newTotalEarned = prevTotalEarned + totalEarned;
         QString date = QDate::currentDate().toString("yyyy-MM-dd");
         if (comment.endsWith(", ")) comment.chop(2);
 
         QSqlQuery insertQuery(db);
         insertQuery.prepare(R"(
             INSERT INTO incomeAndExpenses
-            (total_spent, total_earned, spent_on_advertising, spent_on_goods, income, comment, date)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            (total_spent, total_earned, spent_or_earned_for_this_order, income, comment, date)
+            VALUES (?, ?, ?, ?, ?, ?)
         )");
-        insertQuery.addBindValue(newTotalSpent);
+        insertQuery.addBindValue(prevSpent);
+        insertQuery.addBindValue(newTotalEarned);
         insertQuery.addBindValue(totalEarned);
-        insertQuery.addBindValue(0);
-        insertQuery.addBindValue(0);
         insertQuery.addBindValue(newIncome);
         insertQuery.addBindValue(comment);
         insertQuery.addBindValue(date);

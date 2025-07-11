@@ -27,8 +27,7 @@ IncomeAndExpensesWindow::IncomeAndExpensesWindow(QWidget *parent)
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             total_spent FLOAT,
             total_earned FLOAT,
-            spent_on_advertising FLOAT,
-            spent_on_goods FLOAT,
+            spent_or_earned_for_this_order FLOAT,
             income FLOAT,
             comment TEXT,
             date TEXT
@@ -50,11 +49,10 @@ IncomeAndExpensesWindow::IncomeAndExpensesWindow(QWidget *parent)
             QSqlQuery insertQuery(db);
             insertQuery.prepare(R"(
             INSERT INTO incomeAndExpenses
-            (total_spent, total_earned, spent_on_advertising, spent_on_goods, income, comment, date)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            (total_spent, total_earned, spent_or_earned_for_this_order, income, comment, date)
+            VALUES (?, ?, ?, ?, ?, ?)
         )");
 
-            insertQuery.addBindValue(0);
             insertQuery.addBindValue(0);
             insertQuery.addBindValue(0);
             insertQuery.addBindValue(0);
@@ -82,13 +80,13 @@ void IncomeAndExpensesWindow::loadData() {
     }
 
     QSqlQuery query(db);
-    if (!query.exec("SELECT total_spent, total_earned, spent_on_advertising, spent_on_goods, income, comment, date FROM incomeAndExpenses")) {
+    if (!query.exec("SELECT total_spent, total_earned, spent_or_earned_for_this_order, income, comment, date FROM incomeAndExpenses ORDER BY id DESC")) {
         qDebug() << "Failed to select data:" << query.lastError().text();
         return;
     }
 
     ui->IncomeAndExpensesTableWidget->setRowCount(0);
-    QStringList headers = {"Total spent", "Total earned", "Spent on this advertising", "Spent on this order", "Income", "Comment", "date"};
+    QStringList headers = {"Total spent", "Total earned", "Spent/Earned for this order", "Income", "Comment", "date"};
     ui->IncomeAndExpensesTableWidget->setColumnCount(headers.size());
     ui->IncomeAndExpensesTableWidget->setHorizontalHeaderLabels(headers);
 
