@@ -72,14 +72,13 @@ void SaleWindow::on_confirmPushButton_clicked() {
     if (!db.isOpen()) return;
 
     QString clientName = QInputDialog::getText(this, "Client Name", "Enter client name:");
+    double totalEarned = 0;
+    QString comment;
 
     if (clientName.trimmed().isEmpty()) {
         QMessageBox::warning(this, "Input Error", "Client name cannot be empty.");
         return;
     }
-
-    double totalEarned = 0;
-    QString comment;
 
     for (int row = 0; row < ui->saleTableWidget->rowCount(); ++row) {
         QCheckBox *cb = qobject_cast<QCheckBox *>(ui->saleTableWidget->cellWidget(row, 4));
@@ -94,7 +93,6 @@ void SaleWindow::on_confirmPushButton_clicked() {
 
             totalEarned += sellingPrice * toSell;
             comment += name + " x" + QString::number(toSell) + ", ";
-            comment = "Client: " + clientName + " — " + comment;
 
             int newQuantity = inStock - toSell;
             QSqlQuery query(db);
@@ -114,6 +112,9 @@ void SaleWindow::on_confirmPushButton_clicked() {
             }
         }
     }
+
+    if (comment.endsWith(", ")) comment.chop(2);
+    comment = "Client: " + clientName + " — " + comment;
 
     if (totalEarned > 0) {
         double prevIncome = 0, prevSpent = 0, prevTotalEarned = 0;
@@ -149,6 +150,56 @@ void SaleWindow::on_confirmPushButton_clicked() {
         }
     }
 
+    if (comment.endsWith(", ")) comment.chop(2);
+    QString purchasesStr = comment.section(" — ", 1);
+    QString communication = "Auto-generated after purchase";
+
+    QSqlQuery checkQuery(db);
+    checkQuery.prepare("SELECT id, total_spent, purchases FROM clients WHERE name = ?");
+    checkQuery.addBindValue(clientName);
+
+    if (checkQuery.exec() && checkQuery.next()) {
+        int clientId = checkQuery.value("id").toInt();
+        double oldSpent = checkQuery.value("total_spent").toDouble();
+        QString oldPurchases = checkQuery.value("purchases").toString();
+
+        double newSpent = oldSpent + totalEarned;
+        QString newPurchases = oldPurchases;
+        if (!newPurchases.trimmed().isEmpty() && !purchasesStr.trimmed().isEmpty()) {
+            newPurchases += ", " + purchasesStr;
+        } else if (!purchasesStr.trimmed().isEmpty()) {
+            newPurchases = purchasesStr;
+        }
+
+        QSqlQuery updateQuery(db);
+        updateQuery.prepare("UPDATE clients SET total_spent = ?, purchases = ? WHERE id = ?");
+        updateQuery.addBindValue(newSpent);
+        updateQuery.addBindValue(newPurchases);
+        updateQuery.addBindValue(clientId);
+
+        if (!updateQuery.exec()) {
+            qDebug() << "Failed to update client:" << updateQuery.lastError().text();
+        } else {
+            qDebug() << "Client updated";
+        }
+
+    } else {
+        QSqlQuery insertClientQuery(db);
+        insertClientQuery.prepare(R"(
+        INSERT INTO clients (name, total_spent, purchases, communication)
+        VALUES (?, ?, ?, ?)
+    )");
+        insertClientQuery.addBindValue(clientName);
+        insertClientQuery.addBindValue(totalEarned);
+        insertClientQuery.addBindValue(purchasesStr);
+        insertClientQuery.addBindValue(communication);
+
+        if (!insertClientQuery.exec()) {
+            qDebug() << "Failed to insert new client:" << insertClientQuery.lastError().text();
+        } else {
+            qDebug() << "New client added";
+        }
+    }
     ui->saleTableWidget->setRowCount(0);
     loadProducts();
 }

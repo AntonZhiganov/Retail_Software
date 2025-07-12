@@ -28,7 +28,7 @@ InformationAboutClientsWindow::InformationAboutClientsWindow(QWidget *parent)
             name TEXT,
             total_spent DOUBLE,
             purchases TEXT,
-            comunication TEXT
+            communication TEXT
         )
     )";
 
@@ -47,7 +47,7 @@ InformationAboutClientsWindow::InformationAboutClientsWindow(QWidget *parent)
             QSqlQuery insertQuery(db);
             insertQuery.prepare(R"(
             INSERT INTO clients
-            (name,  total_spent, purchases, comunication)
+            (name,  total_spent, purchases, communication)
             VALUES (?, ?, ?, ?)
         )");
 
@@ -76,13 +76,13 @@ void InformationAboutClientsWindow::loadData() {
     }
 
     QSqlQuery query(db);
-    if (!query.exec("SELECT name,  total_spent, purchases, comunication FROM clients ORDER BY id DESC")) {
+    if (!query.exec("SELECT name,  total_spent, purchases, communication FROM clients ORDER BY id DESC")) {
         qDebug() << "Failed to select data:" << query.lastError().text();
         return;
     }
 
     ui->clientsTableWidget->setRowCount(0);
-    QStringList headers = {"Client name", "Total spent", "Purchases", "Comunication"};
+    QStringList headers = {"Client name", "Total spent", "Purchases", "Communication"};
     ui->clientsTableWidget->setColumnCount(headers.size());
     ui->clientsTableWidget->setHorizontalHeaderLabels(headers);
 
@@ -96,6 +96,34 @@ void InformationAboutClientsWindow::loadData() {
         ++row;
     }
 }
+
+void InformationAboutClientsWindow::addClientPurchase(const QString &clientName, const QString &purchaseDetails, double amountSpent, const QString &comment)
+{
+    QSqlDatabase db = QSqlDatabase::database("WarehoseConnection");
+    if (!db.isOpen()) {
+        qDebug() << "Database is not open!";
+        return;
+    }
+
+    QSqlQuery insertQuery(db);
+    insertQuery.prepare(R"(
+        INSERT INTO clients (name, total_spent, purchases, communication)
+        VALUES (?, ?, ?, ?)
+    )");
+
+    insertQuery.addBindValue(clientName);
+    insertQuery.addBindValue(amountSpent);
+    insertQuery.addBindValue(purchaseDetails);
+    insertQuery.addBindValue(comment);
+
+    if (!insertQuery.exec()) {
+        qDebug() << "Failed to insert client data:" << insertQuery.lastError().text();
+    } else {
+        qDebug() << "Client data inserted successfully";
+        loadData();
+    }
+}
+
 
 InformationAboutClientsWindow::~InformationAboutClientsWindow()
 {

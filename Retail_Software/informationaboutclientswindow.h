@@ -15,6 +15,8 @@ public:
     explicit InformationAboutClientsWindow(QWidget *parent = nullptr);
     ~InformationAboutClientsWindow();
 
+    void addClientPurchase(const QString &clientName, const QString &purchaseDetails, double amountSpent, const QString &comment);
+
 private:
     Ui::InformationAboutClientsWindow *ui;
 
