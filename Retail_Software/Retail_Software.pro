@@ -18,6 +18,7 @@ SOURCES += \
     informationaboutclientswindow.cpp \
     main.cpp \
     mainwindow.cpp \
+    orderswindow.cpp \
     removedproductswindow.cpp \
     salewindow.cpp \
     warehosewindow.cpp
@@ -31,6 +32,7 @@ HEADERS += \
     incomeandexpenseswindow.h \
     informationaboutclientswindow.h \
     mainwindow.h \
+    orderswindow.h \
     removedproductswindow.h \
     salewindow.h \
     warehosewindow.h
@@ -44,6 +46,7 @@ FORMS += \
     incomeandexpenseswindow.ui \
     informationaboutclientswindow.ui \
     mainwindow.ui \
+    orderswindow.ui \
     removedproductswindow.ui \
     salewindow.ui \
     warehosewindow.ui

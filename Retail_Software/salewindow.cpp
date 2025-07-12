@@ -1,6 +1,7 @@
 #include "salewindow.h"
 #include "ui_salewindow.h"
 #include "mainwindow.h"
+#include "informationaboutclientswindow.h"
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QCheckBox>
@@ -152,7 +153,7 @@ void SaleWindow::on_confirmPushButton_clicked() {
 
     if (comment.endsWith(", ")) comment.chop(2);
     QString purchasesStr = comment.section(" — ", 1);
-    QString communication = "Auto-generated after purchase";
+    QString communication = "Enter information";
 
     QSqlQuery checkQuery(db);
     checkQuery.prepare("SELECT id, total_spent, purchases FROM clients WHERE name = ?");
@@ -202,6 +203,10 @@ void SaleWindow::on_confirmPushButton_clicked() {
     }
     ui->saleTableWidget->setRowCount(0);
     loadProducts();
+
+    InformationAboutClientsWindow *informationaboutclientswindow = new InformationAboutClientsWindow();
+    informationaboutclientswindow  ->show();
+    this -> hide();
 }
 
 
