@@ -11,8 +11,8 @@ IncomeAndExpensesWindow::IncomeAndExpensesWindow(QWidget *parent)
     , ui(new Ui::IncomeAndExpensesWindow)
 {
     ui->setupUi(this);
-    ui->IncomeAndExpensesTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->IncomeAndExpensesTableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->incomeAndExpensesTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->incomeAndExpensesTableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     QSqlDatabase db = QSqlDatabase::database("WarehoseConnection");
     if (!db.isOpen()) {
@@ -85,17 +85,17 @@ void IncomeAndExpensesWindow::loadData() {
         return;
     }
 
-    ui->IncomeAndExpensesTableWidget->setRowCount(0);
+    ui->incomeAndExpensesTableWidget->setRowCount(0);
     QStringList headers = {"Total spent", "Total earned", "Spent/Earned for this order", "Income", "Comment", "date"};
-    ui->IncomeAndExpensesTableWidget->setColumnCount(headers.size());
-    ui->IncomeAndExpensesTableWidget->setHorizontalHeaderLabels(headers);
+    ui->incomeAndExpensesTableWidget->setColumnCount(headers.size());
+    ui->incomeAndExpensesTableWidget->setHorizontalHeaderLabels(headers);
 
     int row = 0;
     while (query.next()) {
-        ui->IncomeAndExpensesTableWidget->insertRow(row);
+        ui->incomeAndExpensesTableWidget->insertRow(row);
         for (int col = 0; col < headers.size(); ++col) {
             QTableWidgetItem *item = new QTableWidgetItem(query.value(col).toString());
-            ui->IncomeAndExpensesTableWidget->setItem(row, col, item);
+            ui->incomeAndExpensesTableWidget->setItem(row, col, item);
         }
         ++row;
     }

@@ -46,7 +46,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QTableWidget" name="IncomeAndExpensesTableWidget">
+      <widget class="QTableWidget" name="incomeAndExpensesTableWidget">
        <property name="font">
         <font>
          <pointsize>11</pointsize>
