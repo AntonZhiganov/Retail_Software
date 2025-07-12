@@ -41,7 +41,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QTableWidget" name="OrdersTableWidget"/>
+      <widget class="QTableWidget" name="ordersTableWidget"/>
      </item>
     </layout>
    </item>

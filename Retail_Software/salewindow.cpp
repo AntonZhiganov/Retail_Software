@@ -201,6 +201,23 @@ void SaleWindow::on_confirmPushButton_clicked() {
             qDebug() << "New client added";
         }
     }
+
+    QSqlQuery insertOrderQuery(db);
+    insertOrderQuery.prepare(R"(
+    INSERT INTO orders (client, purchases, spent, date)
+    VALUES (?, ?, ?, ?)
+    )");
+    insertOrderQuery.addBindValue(clientName);
+    insertOrderQuery.addBindValue(purchasesStr);
+    insertOrderQuery.addBindValue(totalEarned);
+    insertOrderQuery.addBindValue(QDate::currentDate().toString("yyyy-MM-dd"));
+
+    if (!insertOrderQuery.exec()) {
+        qDebug() << "Failed to insert order:" << insertOrderQuery.lastError().text();
+    } else {
+        qDebug() << "Order added to orders table.";
+    }
+
     ui->saleTableWidget->setRowCount(0);
     loadProducts();
 
