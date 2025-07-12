@@ -11,6 +11,7 @@ InformationAboutClientsWindow::InformationAboutClientsWindow(QWidget *parent)
     , ui(new Ui::InformationAboutClientsWindow)
 {
     ui->setupUi(this);
+    connect(ui->clientsTableWidget, &QTableWidget::itemChanged, this, &InformationAboutClientsWindow::onClientTableItemChanged);
     ui->clientsTableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->clientsTableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
@@ -91,6 +92,11 @@ void InformationAboutClientsWindow::loadData() {
         ui->clientsTableWidget->insertRow(row);
         for (int col = 0; col < headers.size(); ++col) {
             QTableWidgetItem *item = new QTableWidgetItem(query.value(col).toString());
+            if (col == 3) {
+                item->setFlags(item->flags() | Qt::ItemIsEditable);
+            } else {
+                item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+            }
             ui->clientsTableWidget->setItem(row, col, item);
         }
         ++row;
@@ -124,6 +130,31 @@ void InformationAboutClientsWindow::addClientPurchase(const QString &clientName,
     }
 }
 
+void InformationAboutClientsWindow::onClientTableItemChanged(QTableWidgetItem *item)
+{
+    if (!item) return;
+
+    int col = item->column();
+    if (col != 3) return;
+
+    int row = item->row();
+    QString newCommunication = item->text();
+    QString clientName = ui->clientsTableWidget->item(row, 0)->text();
+
+    QSqlDatabase db = QSqlDatabase::database("WarehoseConnection");
+    if (!db.isOpen()) return;
+
+    QSqlQuery query(db);
+    query.prepare("UPDATE clients SET communication = ? WHERE name = ?");
+    query.addBindValue(newCommunication);
+    query.addBindValue(clientName);
+
+    if (!query.exec()) {
+        qDebug() << "Failed to update communication:" << query.lastError().text();
+    } else {
+        qDebug() << "Communication updated for client" << clientName;
+    }
+}
 
 InformationAboutClientsWindow::~InformationAboutClientsWindow()
 {

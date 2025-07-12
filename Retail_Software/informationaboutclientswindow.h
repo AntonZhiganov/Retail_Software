@@ -2,6 +2,7 @@
 #define INFORMATIONABOUTCLIENTSWINDOW_H
 
 #include <QWidget>
+#include <QTableWidget>
 
 namespace Ui {
 class InformationAboutClientsWindow;
@@ -23,6 +24,7 @@ private:
 private slots:
     void on_menuPushButton_clicked();
     void loadData();
+    void onClientTableItemChanged(QTableWidgetItem *item);
 };
 
 #endif // INFORMATIONABOUTCLIENTSWINDOW_H
