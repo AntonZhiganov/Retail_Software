@@ -43,6 +43,12 @@ void AddProductWindow::on_newProductTypePushButton_clicked()
     quantitySpinBox->setMinimum(0);
     quantitySpinBox->setMaximum(1000);
 
+    QFrame *separator = new QFrame(this);
+    separator->setFrameShape(QFrame::HLine);
+    separator->setFrameShadow(QFrame::Sunken);
+    separator->setStyleSheet("background-color: black; height: 3px; margin: 10px 0; border: none;");
+
+    ui->verticalLayout->insertWidget(0, separator);
     ui->verticalLayout->insertWidget(0, sellingPriceLineEdit);
     ui->verticalLayout->insertWidget(0, sellingPriceName);
     ui->verticalLayout->insertWidget(0, quantitySpinBox);
