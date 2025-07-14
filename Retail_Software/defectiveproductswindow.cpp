@@ -20,13 +20,6 @@ DefectiveProductsWindow::~DefectiveProductsWindow()
     delete ui;
 }
 
-void DefectiveProductsWindow::on_menuPushButton_clicked()
-{
-    MainWindow *mainwindow = new MainWindow();
-    mainwindow  ->show();
-    this -> hide();
-}
-
 void DefectiveProductsWindow::on_confirmPushButton_clicked()
 {
 
@@ -106,4 +99,18 @@ void DefectiveProductsWindow::on_confirmPushButton_clicked()
     } else {
         QMessageBox::warning(this, "Product Not Found", "No product with that name was found.");
     }
+}
+
+void DefectiveProductsWindow::on_defectiveGoodsPushButton_clicked()
+{
+    RemovedProductsWindow *removedproductwindow = new RemovedProductsWindow();
+    removedproductwindow ->show();
+    this -> hide();
+}
+
+void DefectiveProductsWindow::on_menuPushButton_clicked()
+{
+    MainWindow *mainwindow = new MainWindow();
+    mainwindow  ->show();
+    this -> hide();
 }
