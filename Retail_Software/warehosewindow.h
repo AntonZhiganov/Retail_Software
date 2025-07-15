@@ -19,7 +19,6 @@ public:
 private:
     Ui::WarehoseWindow *ui;
     QSqlDatabase db;
-
     void openDB();
     void loadProducts();
 

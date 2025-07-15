@@ -17,9 +17,9 @@ public:
 
 private:
     Ui::AdvertisingInformationWindow *ui;
+    void loadData();
 
 private slots:
-    void loadData();
     void on_menuPushButton_clicked();
 };
 

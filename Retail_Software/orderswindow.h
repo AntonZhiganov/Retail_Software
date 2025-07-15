@@ -17,10 +17,9 @@ public:
 
 private:
     Ui::OrdersWindow *ui;
-
+    void loadData();
 private slots:
     void on_menuPushButton_clicked();
-    void loadData();
 };
 
 #endif // ORDERSWINDOW_H

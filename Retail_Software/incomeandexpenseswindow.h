@@ -17,10 +17,10 @@ public:
 
 private:
     Ui::IncomeAndExpensesWindow *ui;
+    void loadData();
 
 private slots:
     void on_menuPushButton_clicked();
-    void loadData();
 };
 
 #endif // INCOMEANDEXPENSESWINDOW_H

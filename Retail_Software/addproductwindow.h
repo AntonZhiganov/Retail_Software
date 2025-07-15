@@ -27,8 +27,6 @@ private:
     QList<QLineEdit*> priceEdits;
     QList<QLineEdit*> sellingPriceEdits;
     QList<QSpinBox*> quantitySpinBoxes;
-
-private:
     QVBoxLayout* layout;
 
 private slots:

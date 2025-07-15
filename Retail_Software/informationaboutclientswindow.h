@@ -20,10 +20,10 @@ public:
 
 private:
     Ui::InformationAboutClientsWindow *ui;
+    void loadData();
 
 private slots:
     void on_menuPushButton_clicked();
-    void loadData();
     void onClientTableItemChanged(QTableWidgetItem *item);
 };
 

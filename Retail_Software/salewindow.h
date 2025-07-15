@@ -17,10 +17,10 @@ public:
 
 private:
     Ui::SaleWindow *ui;
+    void loadProducts();
 
 private slots:
     void on_menuPushButton_clicked();
-    void loadProducts();
     void on_confirmPushButton_clicked();
 };
 

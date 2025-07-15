@@ -18,7 +18,6 @@ public:
 
 private:
     Ui::AdvertisingWindow *ui;
-
     void openDB();
 
 private slots:

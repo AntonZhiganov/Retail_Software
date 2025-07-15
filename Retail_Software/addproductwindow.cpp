@@ -27,18 +27,17 @@ AddProductWindow::~AddProductWindow()
 
 void AddProductWindow::on_newProductTypePushButton_clicked()
 {
-    int index = nameEdits.size() + 1;
 
-    QLabel* sellingPriceName = new QLabel(QString("selling price %1 (for everyone)").arg(index), this);
+    QLabel* sellingPriceName = new QLabel(QString("selling price (for everyone)"), this);
     QLineEdit* sellingPriceLineEdit = new QLineEdit(this);
 
-    QLabel* nameName = new QLabel(QString("Product name %1").arg(index), this);
+    QLabel* nameName = new QLabel(QString("Product name"), this);
     QLineEdit* nameLineEdit = new QLineEdit(this);
 
-    QLabel* priceName = new QLabel(QString("Product price %1 (for everyone)").arg(index), this);
+    QLabel* priceName = new QLabel(QString("Product price (for everyone)"), this);
     QLineEdit* priceLineEdit = new QLineEdit(this);
 
-    QLabel* quantityName = new QLabel(QString("Product quantity %1").arg(index), this);
+    QLabel* quantityName = new QLabel(QString("Product quantity"), this);
     QSpinBox* quantitySpinBox = new QSpinBox(this);
     quantitySpinBox->setMinimum(0);
     quantitySpinBox->setMaximum(1000);
