@@ -184,7 +184,7 @@ void AddProductWindow::on_confirmOrderPushButton_clicked()
 
     WarehoseWindow *warehosewindow = new WarehoseWindow();
     warehosewindow->show();
-    this -> hide();
+    this -> close();
 }
 
 
@@ -192,5 +192,5 @@ void AddProductWindow::on_menuPushButton_clicked()
 {
     MainWindow *mainwindow = new MainWindow();
     mainwindow  ->show();
-    this -> hide();
+    this -> close();
 }

@@ -107,5 +107,5 @@ void RemovedProductsWindow::on_menuPushButton_clicked()
 {
     MainWindow *mainwindow = new MainWindow();
     mainwindow  ->show();
-    this -> hide();
+    this -> close();
 }

@@ -93,7 +93,7 @@ void DefectiveProductsWindow::on_confirmPushButton_clicked()
 
             RemovedProductsWindow *removedproductwindow = new RemovedProductsWindow();
             removedproductwindow ->show();
-            this -> hide();
+            this -> close();
         }
 
     } else {
@@ -105,12 +105,12 @@ void DefectiveProductsWindow::on_defectiveGoodsPushButton_clicked()
 {
     RemovedProductsWindow *removedproductwindow = new RemovedProductsWindow();
     removedproductwindow ->show();
-    this -> hide();
+    this -> close();
 }
 
 void DefectiveProductsWindow::on_menuPushButton_clicked()
 {
     MainWindow *mainwindow = new MainWindow();
     mainwindow  ->show();
-    this -> hide();
+    this -> close();
 }

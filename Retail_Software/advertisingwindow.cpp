@@ -24,7 +24,7 @@ void AdvertisingWindow::on_viewDataPushButton_clicked(){
 
     AdvertisingInformationWindow *advertisinginformationwindow = new AdvertisingInformationWindow;
     advertisinginformationwindow->show();
-    (this) -> hide();
+    (this) -> close();
 }
 
 void AdvertisingWindow::on_confirmAdvertisingPushButton_clicked()
@@ -110,6 +110,6 @@ void AdvertisingWindow::on_menuPushButton_clicked()
 {
     MainWindow *mainwindow = new MainWindow();
     mainwindow  ->show();
-    this -> hide();
+    this -> close();
 
 }

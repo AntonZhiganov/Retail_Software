@@ -24,19 +24,19 @@ void AdditionalExpensesWindow::on_defectiveProductPushButton_clicked()
 {
     DefectiveProductsWindow * defectiveproductswindow = new DefectiveProductsWindow();
     defectiveproductswindow->show();
-    this -> hide();
+    this -> close();
 }
 
 void AdditionalExpensesWindow::on_advertisingPushButton_clicked()
 {
     AdvertisingWindow * advertisingwindow = new AdvertisingWindow();
     advertisingwindow->show();
-    this -> hide();
+    this -> close();
 }
 
 void AdditionalExpensesWindow::on_menuPushButton_clicked()
 {
     MainWindow *mainwindow = new MainWindow();
     mainwindow  ->show();
-    this -> hide();
+    this -> close();
 }

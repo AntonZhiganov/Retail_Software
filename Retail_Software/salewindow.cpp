@@ -223,7 +223,7 @@ void SaleWindow::on_confirmPushButton_clicked() {
 
     InformationAboutClientsWindow *informationaboutclientswindow = new InformationAboutClientsWindow();
     informationaboutclientswindow  ->show();
-    this -> hide();
+    this -> close();
 }
 
 
@@ -231,6 +231,6 @@ void SaleWindow::on_menuPushButton_clicked()
 {
     MainWindow *mainwindow = new MainWindow();
     mainwindow  ->show();
-    this -> hide();
+    this -> close();
 
 }
