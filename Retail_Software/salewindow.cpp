@@ -114,6 +114,28 @@ void SaleWindow::on_confirmPushButton_clicked() {
         }
     }
 
+    bool ok;
+    QString paidInput = QInputDialog::getText(
+        this,
+        "Amount Paid",
+        "Enter amount paid (leave empty for default):",
+        QLineEdit::Normal,
+        "",
+        &ok
+        );
+
+    if (ok && !paidInput.trimmed().isEmpty()) {
+        bool okNum;
+        double enteredValue = paidInput.toDouble(&okNum);
+        if (okNum && enteredValue >= 0) {
+            totalEarned = enteredValue;
+        } else {
+            QMessageBox::warning(this, "Invalid Value", "Entered amount is not valid.");
+            return;
+        }
+    }
+
+
     if (comment.endsWith(", ")) comment.chop(2);
     comment = "Client: " + clientName + " — " + comment;
 
